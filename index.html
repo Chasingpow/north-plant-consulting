@@ -893,70 +893,34 @@
     prog.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
   }, {passive:true});
 
-  // ===== Production Flow: orders stream through stations; a red one stalls, gets fixed, flows on =====
+  // ===== EKG heartbeat line =====
   (function(){
     const cv = document.getElementById('flow-canvas');
     if (!cv || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ctx = cv.getContext('2d');
-    let W, H, lanes, stations, parts;
-    const GREEN = '141,198,63', BLUE = '69,174,224', RED = '232,93,79', DPR = Math.min(devicePixelRatio || 1, 2);
-
-    let hbX, hbY;
+    const DPR = Math.min(devicePixelRatio || 1, 2), PERIOD = 340, TAIL = 560;
+    let W, H, hbX, hbY;
     function setup(){
       W = cv.offsetWidth; H = cv.offsetHeight;
       cv.width = W * DPR; cv.height = H * DPR;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      const n = 5;
-      lanes = Array.from({length:n}, (_,i) => H * (0.18 + 0.72 * i/(n-1)));
-      stations = [0.22, 0.44, 0.66, 0.86].map(f => f * W);
-      parts = [];
-      for (let i = 0; i < 26; i++) spawn(Math.random() * W);
-      hbX = -TAIL; hbY = H * 0.895;
+      hbX = -TAIL; hbY = Math.min(160, H * 0.17);
     }
-    // EKG heartbeat waveform: flat baseline, P bump, sharp QRS spike, T bump
-    const PERIOD = 300, TAIL = 520;
     function ekg(x){
       const p = ((x % PERIOD) + PERIOD) % PERIOD / PERIOD;
-      let y = 0;
       const bump = (c, w, a) => a * Math.exp(-Math.pow((p - c) / w, 2));
-      y += bump(0.58, 0.025, 5);          // P wave
-      y += bump(0.665, 0.012, -7);        // Q dip
-      y += bump(0.69, 0.014, 34);         // R spike
-      y += bump(0.715, 0.013, -12);       // S dip
-      y += bump(0.80, 0.035, 9);          // T wave
-      return -y;
-    }
-    function spawn(x){
-      parts.push({
-        x: x !== undefined ? x : -12,
-        lane: Math.floor(Math.random() * lanes.length),
-        v: 0.45 + Math.random() * 0.55,
-        r: 2 + Math.random() * 1.6,
-        state: 'ok',            // ok | stalled | fixed
-        timer: 0,
-        willStall: Math.random() < 0.16,
-        stallAt: stations[Math.floor(Math.random() * stations.length)]
-      });
+      return -(bump(0.58, 0.025, 5) + bump(0.665, 0.012, -7) + bump(0.69, 0.014, 34) + bump(0.715, 0.013, -12) + bump(0.80, 0.035, 9));
     }
     let last = 0;
     function frame(t){
       const dt = Math.min(33, t - last) / 16.7; last = t;
       ctx.clearRect(0, 0, W, H);
-      // lane lines
-      ctx.strokeStyle = 'rgba(255,255,255,.045)'; ctx.lineWidth = 1;
-      lanes.forEach(y => { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); });
-      // station ticks
-      stations.forEach(x => {
-        lanes.forEach(y => {
-          ctx.strokeStyle = 'rgba(255,255,255,.09)';
-          ctx.beginPath(); ctx.moveTo(x, y - 7); ctx.lineTo(x, y + 7); ctx.stroke();
-        });
-      });
-      // heartbeat sweep — full width, comet tail
+      // faint resting baseline across the full width
+      ctx.strokeStyle = 'rgba(255,255,255,.05)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, hbY); ctx.lineTo(W, hbY); ctx.stroke();
       hbX += 3.1 * dt;
       if (hbX > W + TAIL) hbX = -TAIL;
-      ctx.lineWidth = 2;
-      ctx.lineJoin = 'round';
+      ctx.lineWidth = 2; ctx.lineJoin = 'round';
       const STEP = 6;
       for (let x = Math.max(0, hbX - TAIL); x < Math.min(W, hbX); x += STEP){
         const a = Math.max(0, 1 - (hbX - x) / TAIL) * 0.85;
@@ -971,35 +935,6 @@
         ctx.fillStyle = '#b6e37a';
         ctx.beginPath(); ctx.arc(hbX, hbY + ekg(hbX), 3.2, 0, 7); ctx.fill();
         ctx.shadowBlur = 0;
-      }
-      for (let i = parts.length - 1; i >= 0; i--){
-        const p = parts[i], y = lanes[p.lane];
-        if (p.state === 'stalled'){
-          p.timer -= dt;
-          if (p.timer <= 0){ p.state = 'fixed'; p.willStall = false; }
-        } else {
-          p.x += p.v * dt * 1.6;
-          if (p.willStall && p.x >= p.stallAt){ p.state = 'stalled'; p.timer = 55 + Math.random() * 50; p.x = p.stallAt; }
-        }
-        if (p.x > W + 14){ parts.splice(i, 1); spawn(); continue; }
-        const col = p.state === 'stalled' ? RED : (p.state === 'fixed' ? GREEN : (Math.random() < 0.5 ? GREEN : BLUE));
-        const glow = p.state === 'stalled' ? 14 : 8;
-        const pulse = p.state === 'stalled' ? (0.55 + 0.45 * Math.sin(t / 110)) : 0.9;
-        // trail
-        const grad = ctx.createLinearGradient(p.x - 46, y, p.x, y);
-        grad.addColorStop(0, 'rgba(' + col + ',0)');
-        grad.addColorStop(1, 'rgba(' + col + ',' + 0.28 * pulse + ')');
-        ctx.strokeStyle = grad; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(p.x - 46, y); ctx.lineTo(p.x, y); ctx.stroke();
-        // dot
-        ctx.shadowColor = 'rgba(' + col + ',.9)'; ctx.shadowBlur = glow;
-        ctx.fillStyle = 'rgba(' + col + ',' + pulse + ')';
-        ctx.beginPath(); ctx.arc(p.x, y, p.r, 0, 7); ctx.fill();
-        ctx.shadowBlur = 0;
-        if (p.state === 'stalled'){
-          ctx.strokeStyle = 'rgba(' + RED + ',' + 0.5 * pulse + ')'; ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.arc(p.x, y, p.r + 5 + 3 * Math.sin(t / 140), 0, 7); ctx.stroke();
-        }
       }
       requestAnimationFrame(frame);
     }
