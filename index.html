@@ -3,211 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>North Plant Consulting — Industrial Plant &amp; Manufacturing Consulting</title>
+<title>North Plant Consulting — Manufacturing Operations Consulting</title>
 <meta name="description" content="North Plant Consulting brings Toyota Production System discipline to manufacturing plants — production control, standardized work, daily management, KPIs and visual management.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#14315c;
-    --navy-2:#1a3f75;
-    --steel:#42586e;
-    --blue:#1e7fd0;
-    --orange:#76b82a;
-    --orange-dark:#5f9a1e;
-    --bg:#f6f8fa;
-    --white:#ffffff;
-    --text:#26333f;
-    --muted:#5d6f80;
-    --line:#e3e9ee;
-    --radius:10px;
+    --bg:#081120;
+    --bg-2:#0b1830;
+    --surface:rgba(255,255,255,.035);
+    --surface-2:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.09);
+    --line-bright:rgba(255,255,255,.18);
+    --text:#e8eef6;
+    --muted:#8fa2ba;
+    --navy:#0E2745;
+    --blue:#2E86C8;
+    --blue-2:#45AEE0;
+    --green:#8DC63F;
+    --green-2:#57B02C;
+    --red:#e85d4f;
+    --grad:linear-gradient(100deg,var(--blue-2),var(--green));
+    --font-d:'Sora',system-ui,sans-serif;
+    --font-b:'Inter',system-ui,sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.6}
+  body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.65;overflow-x:hidden}
+  ::selection{background:rgba(141,198,63,.35)}
   img{max-width:100%}
-  a{color:var(--orange);text-decoration:none}
-  .container{max-width:1100px;margin:0 auto;padding:0 24px}
+  a{color:var(--green);text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:0 32px}
+  h1,h2,h3{font-family:var(--font-d)}
 
-  /* Header */
-  header{position:sticky;top:0;z-index:50;background:var(--navy);box-shadow:0 2px 10px rgba(0,0,0,.25)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-  .logo{display:flex;align-items:center}
-  .logo-img{height:46px;width:auto;display:block}
-  nav ul{display:flex;gap:26px;list-style:none}
-  nav a{color:#cfdae4;font-size:.95rem;font-weight:600}
-  nav a:hover{color:#fff}
-  .nav-cta{background:var(--orange);color:#fff !important;padding:9px 18px;border-radius:6px}
-  .nav-cta:hover{background:var(--orange-dark)}
-  .menu-btn{display:none;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+  /* subtle global grid texture */
+  .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background:
+      linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 75%)}
+  main,header,footer{position:relative;z-index:1}
 
-  /* Hero */
-  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 55%,#1e5a9e 100%);color:#fff;padding:96px 0 110px;position:relative;overflow:hidden}
-  .hero::after{content:"";position:absolute;right:-120px;top:-60px;width:480px;height:480px;border:2px solid rgba(118,184,42,.22);border-radius:50%;pointer-events:none}
-  .hero::before{content:"";position:absolute;right:40px;bottom:-180px;width:360px;height:360px;border:2px solid rgba(255,255,255,.07);border-radius:50%;pointer-events:none}
-  .hero .kicker{display:inline-block;background:rgba(118,184,42,.15);border:1px solid rgba(118,184,42,.5);color:#b8e07f;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:22px}
-  .hero h1{font-size:clamp(2rem,4.6vw,3.2rem);line-height:1.15;font-weight:800;max-width:720px}
-  .hero h1 em{color:var(--orange);font-style:normal}
-  .hero p{margin:22px 0 34px;font-size:1.15rem;color:#c3d1dd;max-width:600px}
-  .btn{display:inline-block;font-weight:700;border-radius:8px;padding:14px 28px;font-size:1rem;transition:.15s}
-  .btn-primary{background:var(--orange);color:#fff}
-  .btn-primary:hover{background:var(--orange-dark);transform:translateY(-1px)}
-  .btn-ghost{border:2px solid rgba(255,255,255,.35);color:#fff;margin-left:12px}
-  .btn-ghost:hover{border-color:#fff}
-  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;position:relative;z-index:1}
+  /* reveal animations */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
-  /* Hero dashboard mock */
-  .dash{background:#0f2647;border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.4);transform:rotate(1.2deg)}
-  .dash-head{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;font-weight:700;color:#9fb8d4;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
-  .live{display:flex;align-items:center;gap:6px;color:#8fd23c;font-size:.72rem}
-  .live-dot{width:8px;height:8px;border-radius:50%;background:#8fd23c;animation:pulse 1.6s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-  .kpi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:10px 12px}
-  .kpi small{display:block;font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8ba6c4;margin-bottom:3px}
-  .kpi b{font-size:1.15rem;color:#fff}
-  .kpi .up{color:#8fd23c;font-size:.72rem;font-weight:700}
-  .kpi .down{color:#ff7a6b;font-size:.72rem;font-weight:700}
-  .dash-chart{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:9px;padding:12px}
-  .dash-chart small{display:block;font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8ba6c4;margin-bottom:10px}
-  .bars{display:flex;align-items:flex-end;gap:8px;height:78px}
-  .bargrp{flex:1;display:flex;align-items:flex-end;gap:3px;height:100%}
-  .bar{flex:1;border-radius:3px 3px 0 0}
-  .bar.plan{background:rgba(255,255,255,.22)}
-  .bar.act{background:#76b82a}
-  .bar.miss{background:#e85d4f}
-  .bar-labels{display:flex;gap:8px;margin-top:6px}
-  .bar-labels span{flex:1;text-align:center;font-size:.6rem;color:#7d99b8}
-  .miss-tag{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:rgba(232,93,79,.14);border:1px solid rgba(232,93,79,.4);color:#ffb1a6;font-size:.7rem;font-weight:600;border-radius:6px;padding:4px 10px}
-  .miss-dot{width:7px;height:7px;border-radius:50%;background:#e85d4f;flex:0 0 auto}
+  /* ============ HEADER ============ */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;transition:.3s;
+    background:rgba(8,17,32,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    border-bottom:1px solid transparent}
+  header.scrolled{background:rgba(8,17,32,.88);border-bottom-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:92px;transition:.3s}
+  header.scrolled .nav{height:72px}
+  .logo-img{height:64px;width:auto;display:block;transition:.3s}
+  header.scrolled .logo-img{height:52px}
+  nav ul{display:flex;gap:38px;list-style:none;align-items:center}
+  nav a{color:#c4d2e3;font-size:.95rem;font-weight:600;letter-spacing:.01em;position:relative;padding:4px 0}
+  nav a:not(.nav-cta)::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--grad);transition:.25s}
+  nav a:not(.nav-cta):hover{color:#fff}
+  nav a:not(.nav-cta):hover::after{width:100%}
+  .nav-cta{background:var(--grad);color:#06121f !important;font-weight:700;padding:12px 26px;border-radius:10px;box-shadow:0 0 24px rgba(141,198,63,.25);transition:.25s}
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 32px rgba(141,198,63,.45)}
+  .menu-btn{display:none;background:none;border:none;color:#fff;font-size:1.7rem;cursor:pointer}
 
-  /* Stats strip */
-  .stats{background:var(--white);border-bottom:1px solid var(--line)}
-  .stats .container{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-top:28px;padding-bottom:28px;text-align:center}
-  .stats b{display:block;font-size:1.6rem;color:var(--navy)}
-  .stats small{color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem}
+  /* ============ HERO ============ */
+  .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;
+    background:
+      radial-gradient(ellipse 55% 60% at 78% 28%,rgba(46,134,200,.22),transparent 65%),
+      radial-gradient(ellipse 40% 45% at 12% 78%,rgba(141,198,63,.12),transparent 65%),
+      linear-gradient(180deg,#0a1526 0%,var(--bg) 100%)}
+  .hero::before{content:"";position:absolute;right:-260px;top:-260px;width:820px;height:820px;border-radius:50%;
+    border:1px solid rgba(141,198,63,.14);pointer-events:none}
+  .hero::after{content:"";position:absolute;right:-160px;top:-160px;width:620px;height:620px;border-radius:50%;
+    border:1px solid rgba(69,174,224,.12);pointer-events:none}
+  .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding:150px 0 100px;width:100%}
+  .eyebrow{display:inline-flex;align-items:center;gap:12px;color:var(--green);font-weight:700;font-size:.82rem;
+    letter-spacing:.22em;text-transform:uppercase;margin-bottom:28px}
+  .eyebrow::before{content:"";width:44px;height:2px;background:var(--grad)}
+  .hero h1{font-size:clamp(2.6rem,5.2vw,4.4rem);line-height:1.06;font-weight:800;letter-spacing:-.02em}
+  .hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{margin:30px 0 40px;font-size:1.2rem;color:var(--muted);max-width:560px;line-height:1.7}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;border-radius:12px;padding:17px 34px;font-size:1.02rem;transition:.25s;font-family:var(--font-b)}
+  .btn-primary{background:var(--grad);color:#06121f;box-shadow:0 0 32px rgba(141,198,63,.3)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 44px rgba(141,198,63,.5)}
+  .btn-primary svg{width:18px;height:18px;stroke:#06121f;transition:.25s}
+  .btn-primary:hover svg{transform:translateX(4px)}
+  .btn-ghost{border:1px solid var(--line-bright);color:#fff;margin-left:14px;background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{border-color:var(--green);color:var(--green);background:rgba(141,198,63,.06)}
+  .method-strip{margin-top:52px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;color:#5f7490;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .method-strip span{display:flex;align-items:center;gap:8px}
+  .method-strip span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--green)}
 
-  /* Sections */
-  section{padding:84px 0}
-  .sec-head{max-width:640px;margin-bottom:48px}
-  .sec-head .tag{color:var(--orange);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem}
-  .sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--navy);margin:8px 0 12px}
-  .sec-head p{color:var(--muted)}
+  /* hero dashboard — glass */
+  .dash-wrap{perspective:1200px}
+  .dash{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    border:1px solid var(--line-bright);border-radius:20px;padding:26px;position:relative;
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.03) inset;
+    animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+  .dash::before{content:"";position:absolute;inset:-1px;border-radius:20px;padding:1px;pointer-events:none;
+    background:linear-gradient(140deg,rgba(69,174,224,.6),transparent 30%,transparent 70%,rgba(141,198,63,.6));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .dash-head{display:flex;align-items:center;justify-content:space-between;font-size:.82rem;font-weight:700;color:#9fb8d4;
+    text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px;font-family:var(--font-d)}
+  .live{display:flex;align-items:center;gap:7px;color:var(--green);font-size:.72rem}
+  .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+  .kpi{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+  .kpi small{display:block;font-size:.6rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#7d94b0;margin-bottom:5px}
+  .kpi b{font-size:1.45rem;color:#fff;font-family:var(--font-d);font-weight:700}
+  .kpi .up{color:var(--green);font-size:.72rem;font-weight:700}
+  .kpi .down{color:#ff8a7d;font-size:.72rem;font-weight:700}
+  .dash-chart{background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .dash-chart small{display:block;font-size:.63rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#7d94b0;margin-bottom:12px}
+  .bars{display:flex;align-items:flex-end;gap:9px;height:96px}
+  .bargrp{flex:1;display:flex;align-items:flex-end;gap:4px;height:100%}
+  .bar{flex:1;border-radius:4px 4px 0 0;transform-origin:bottom;animation:rise 1s cubic-bezier(.2,.7,.3,1) backwards}
+  .bargrp:nth-child(1) .bar{animation-delay:.15s}.bargrp:nth-child(2) .bar{animation-delay:.3s}
+  .bargrp:nth-child(3) .bar{animation-delay:.45s}.bargrp:nth-child(4) .bar{animation-delay:.6s}
+  .bargrp:nth-child(5) .bar{animation-delay:.75s}.bargrp:nth-child(6) .bar{animation-delay:.9s}
+  @keyframes rise{from{transform:scaleY(0)}}
+  .bar.plan{background:rgba(255,255,255,.16)}
+  .bar.act{background:linear-gradient(180deg,var(--green),var(--green-2));box-shadow:0 0 14px rgba(141,198,63,.35)}
+  .bar.miss{background:linear-gradient(180deg,#ff8a7d,var(--red));box-shadow:0 0 14px rgba(232,93,79,.35)}
+  .bar-labels{display:flex;gap:9px;margin-top:8px}
+  .bar-labels span{flex:1;text-align:center;font-size:.62rem;color:#5f7490}
+  .miss-tag{display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:rgba(232,93,79,.12);
+    border:1px solid rgba(232,93,79,.35);color:#ffb1a6;font-size:.72rem;font-weight:600;border-radius:8px;padding:6px 12px}
+  .miss-dot{width:7px;height:7px;border-radius:50%;background:var(--red)}
 
-  /* Services */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:30px;transition:.18s}
-  .card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(20,49,92,.10);border-color:#c4e096}
-  .card .icon{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--orange));display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-  .card .icon svg{width:26px;height:26px;stroke:#fff}
-  .card h3{color:var(--navy);font-size:1.15rem;margin-bottom:10px}
-  .card p{color:var(--muted);font-size:.95rem}
+  /* ============ PROOF BAND ============ */
+  .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+  .band .container{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding-top:0;padding-bottom:0}
+  .band-item{padding:38px 30px;text-align:center;position:relative}
+  .band-item + .band-item::before{content:"";position:absolute;left:0;top:26%;bottom:26%;width:1px;background:var(--line)}
+  .band-item b{display:block;font-family:var(--font-d);font-size:1.5rem;font-weight:700;
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px}
+  .band-item small{color:var(--muted);font-size:.86rem;font-weight:500}
 
-  /* Capabilities strip */
-  .cap-strip{margin-top:44px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:28px 30px}
-  .cap-strip h3{color:var(--navy);font-size:1rem;margin-bottom:16px;text-transform:uppercase;letter-spacing:.08em}
-  .chips{display:flex;flex-wrap:wrap;gap:10px}
-  .chip{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.88rem;font-weight:600;color:var(--steel)}
-  .chip:hover{border-color:var(--orange);color:var(--orange-dark)}
+  /* ============ SECTIONS ============ */
+  section{padding:120px 0;position:relative}
+  .sec-head{max-width:720px;margin-bottom:64px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head .eyebrow{margin-bottom:20px}
+  .sec-head.center .eyebrow{justify-content:center}
+  .sec-head.center .eyebrow::before{display:none}
+  .sec-head h2{font-size:clamp(1.9rem,3.6vw,2.9rem);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin-bottom:18px}
+  .sec-head h2 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sec-head p{color:var(--muted);font-size:1.08rem}
 
-  /* About */
-  .about{background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .about .container{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
-  .about-visual{background:linear-gradient(150deg,var(--navy),#1e4f8c);border-radius:14px;padding:36px;color:#fff}
-  .about-visual h3{font-size:1.05rem;color:#b8e07f;text-transform:uppercase;letter-spacing:.1em;margin-bottom:18px}
-  .about-visual li{list-style:none;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12);display:flex;gap:12px;align-items:flex-start;font-size:.96rem;color:#d9e4ee}
-  .about-visual li:last-child{border-bottom:none}
-  .check{color:var(--orange);font-weight:800;flex:0 0 auto}
-  .about h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--navy);margin:8px 0 16px}
-  .about p{color:var(--muted);margin-bottom:14px}
+  /* services */
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px 30px;position:relative;overflow:hidden;transition:.35s}
+  .card::before{content:"";position:absolute;inset:0;border-radius:18px;opacity:0;transition:.35s;pointer-events:none;
+    background:radial-gradient(420px 200px at var(--mx,50%) var(--my,0%),rgba(141,198,63,.1),transparent 70%)}
+  .card:hover{transform:translateY(-6px);border-color:rgba(141,198,63,.4);background:var(--surface-2)}
+  .card:hover::before{opacity:1}
+  .card .num{position:absolute;top:22px;right:26px;font-family:var(--font-d);font-weight:800;font-size:1rem;color:rgba(255,255,255,.14)}
+  .card .icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;
+    background:linear-gradient(140deg,rgba(69,174,224,.18),rgba(141,198,63,.18));border:1px solid var(--line-bright)}
+  .card .icon svg{width:26px;height:26px;stroke:var(--blue-2)}
+  .card:hover .icon svg{stroke:var(--green)}
+  .card h3{font-size:1.18rem;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+  .card p{color:var(--muted);font-size:.94rem}
 
-  /* Process */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;counter-reset:step}
-  .step{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative}
-  .step::before{counter-increment:step;content:"0" counter(step);font-size:2rem;font-weight:800;color:#d5e8b8;position:absolute;top:14px;right:20px}
-  .step h3{color:var(--navy);font-size:1.05rem;margin-bottom:8px}
+  /* marquee capabilities */
+  .marquee{margin-top:56px;overflow:hidden;position:relative;padding:6px 0;
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .marquee-track{display:flex;gap:14px;width:max-content;animation:scroll 36s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+  .chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:11px 24px;font-size:.9rem;
+    font-weight:600;color:#b9c8da;white-space:nowrap;transition:.25s}
+  .chip:hover{border-color:var(--green);color:var(--green)}
+
+  /* ============ SHOWCASE ============ */
+  .showcase{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 50%,var(--bg) 100%)}
+  .gemba{position:relative;border-radius:24px;overflow:hidden;margin-bottom:26px;
+    border:1px solid var(--line-bright);box-shadow:0 40px 100px rgba(0,0,0,.5)}
+  .gemba::after{content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;
+    background:linear-gradient(180deg,transparent 55%,rgba(8,17,32,.92) 100%)}
+  .gemba img{display:block;width:100%;height:auto}
+  .gemba-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:30px 38px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .gemba-cap .big{font-family:var(--font-d);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:700;color:#fff}
+  .gemba-cap .big b{color:var(--green)}
+  .gemba-cap .sub{color:#b9c8da;font-size:.95rem}
+  .vis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px}
+  .vis-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.3s}
+  .vis-card:hover{border-color:var(--line-bright);transform:translateY(-4px)}
+  .vis-title{background:rgba(255,255,255,.04);border-bottom:1px solid var(--line);font-size:.74rem;font-weight:700;
+    letter-spacing:.09em;text-transform:uppercase;padding:14px 20px;display:flex;justify-content:space-between;color:#c4d2e3;font-family:var(--font-d)}
+  .vis-title span:last-child{color:var(--green)}
+  .vis-body{padding:20px}
+  .vis-card p.vis-cap{padding:0 20px 20px;font-size:.86rem;color:var(--muted)}
+  .hxh{width:100%;border-collapse:collapse;font-size:.8rem}
+  .hxh th{text-align:left;color:#7d94b0;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:7px 8px;border-bottom:1px solid var(--line-bright)}
+  .hxh td{padding:8px;border-bottom:1px solid var(--line);color:var(--text);font-weight:600}
+  .ok-pill,.miss-pill{display:inline-block;border-radius:6px;padding:2px 9px;font-size:.68rem;font-weight:700}
+  .ok-pill{background:rgba(141,198,63,.14);color:var(--green)}
+  .miss-pill{background:rgba(232,93,79,.14);color:#ff9d92}
+  .sw-step{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid var(--line);
+    border-radius:10px;padding:10px 13px;margin-bottom:8px;font-size:.8rem;font-weight:600}
+  .sw-num{width:22px;height:22px;border-radius:50%;background:var(--grad);color:#06121f;font-size:.68rem;font-weight:800;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .sw-time{margin-left:auto;color:#7d94b0;font-size:.7rem;font-weight:700;white-space:nowrap}
+  .sw-flag{font-size:.64rem;font-weight:800;border-radius:5px;padding:1px 7px}
+  .sw-q{background:rgba(141,198,63,.16);color:var(--green)}
+  .sw-s{background:rgba(245,166,35,.16);color:#f5a623}
+  .sw-total{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;color:#7d94b0;padding:8px 4px 0}
+  .takt-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+  .takt-fill{height:100%;width:87%;background:var(--grad);border-radius:4px}
+  .tier{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .tier-bar{height:42px;border-radius:10px;display:flex;align-items:center;padding:0 16px;color:#06121f;font-size:.76rem;font-weight:800;white-space:nowrap}
+  .tier small{color:var(--muted);font-size:.72rem;line-height:1.35}
+  .t1{width:58%;background:linear-gradient(90deg,var(--green),var(--green-2))}
+  .t2{width:47%;background:linear-gradient(90deg,#9fd44f,#78b834)}
+  .t3{width:36%;background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#fff}
+  .t4{width:27%;background:#173A63;color:#fff}
+  .tier-arrow{text-align:center;color:var(--green);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:6px 0 10px}
+
+  /* ============ ABOUT ============ */
+  .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+  .about-grid h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:22px}
+  .about-grid h2 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .about-grid p{color:var(--muted);margin-bottom:18px;font-size:1.02rem}
+  .about-panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:40px;position:relative;overflow:hidden}
+  .about-panel::before{content:"";position:absolute;top:-80px;right:-80px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,rgba(141,198,63,.14),transparent 70%)}
+  .about-panel h3{font-size:.85rem;color:var(--green);text-transform:uppercase;letter-spacing:.14em;margin-bottom:22px}
+  .about-panel li{list-style:none;padding:15px 0;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:flex-start;font-size:.97rem;color:#c4d2e3}
+  .about-panel li:last-child{border-bottom:none}
+  .check{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:rgba(141,198,63,.15);display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .check svg{width:12px;height:12px;stroke:var(--green);stroke-width:3}
+
+  /* ============ PROCESS ============ */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative}
+  .steps::before{content:"";position:absolute;top:27px;left:8%;right:8%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--line-bright) 15%,var(--line-bright) 85%,transparent)}
+  .step{position:relative;padding-top:76px}
+  .step .dot{position:absolute;top:0;left:0;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);border:1px solid var(--line-bright);font-family:var(--font-d);font-weight:800;color:var(--green);font-size:1rem;z-index:1}
+  .step:hover .dot{border-color:var(--green);box-shadow:0 0 24px rgba(141,198,63,.3)}
+  .step h3{font-size:1.12rem;font-weight:700;margin-bottom:10px}
   .step p{color:var(--muted);font-size:.92rem}
 
-  /* Visual system showcase */
-  .showcase{background:var(--white);border-top:1px solid var(--line)}
-  .gemba{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:44px;box-shadow:0 14px 34px rgba(20,49,92,.09)}
-  .gemba img{display:block;width:100%;height:auto}
-  .gemba-cap{background:var(--navy);color:#c3d1dd;font-size:.88rem;padding:12px 20px;text-align:center}
-  .gemba-cap b{color:#8fd23c}
-  .vis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-  .vis-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
-  .vis-card .vis-title{background:var(--navy);color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
-  .vis-card .vis-title span:last-child{color:#8fd23c;font-size:.68rem}
-  .vis-body{padding:16px}
-  .vis-card p.vis-cap{padding:0 16px 16px;font-size:.85rem;color:var(--muted)}
-  /* hour-by-hour table */
-  .hxh{width:100%;border-collapse:collapse;font-size:.78rem}
-  .hxh th{text-align:left;color:var(--steel);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;padding:6px 8px;border-bottom:2px solid var(--line)}
-  .hxh td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--text);font-weight:600}
-  .ok-pill,.miss-pill{display:inline-block;border-radius:5px;padding:2px 8px;font-size:.68rem;font-weight:700}
-  .ok-pill{background:#e6f2d5;color:#4d7d15}
-  .miss-pill{background:#fbe0dc;color:#b53a2c}
-  /* standardized work */
-  .sw-step{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:8px;font-size:.8rem;font-weight:600}
-  .sw-num{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-  .sw-time{margin-left:auto;color:var(--steel);font-size:.7rem;font-weight:700;white-space:nowrap}
-  .sw-flag{font-size:.66rem;font-weight:800;border-radius:4px;padding:1px 6px;white-space:nowrap}
-  .sw-q{background:#e6f2d5;color:#4d7d15}
-  .sw-s{background:#fdeecc;color:#a3670a}
-  .sw-total{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;color:var(--steel);padding:6px 4px 0}
-  .takt-bar{height:8px;border-radius:4px;background:var(--line);margin-top:6px;overflow:hidden}
-  .takt-fill{height:100%;width:87%;background:linear-gradient(90deg,var(--blue),var(--orange));border-radius:4px}
-  /* tier cadence */
-  .tier{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-  .tier-bar{height:40px;border-radius:8px;display:flex;align-items:center;padding:0 14px;color:#fff;font-size:.76rem;font-weight:700;white-space:nowrap}
-  .tier small{color:var(--muted);font-size:.72rem;line-height:1.3}
-  .t1{width:58%;background:var(--orange)}
-  .t2{width:47%;background:#4a9e3f}
-  .t3{width:36%;background:var(--blue)}
-  .t4{width:27%;background:var(--navy)}
-  .tier-arrow{text-align:center;color:var(--steel);font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin:4px 0 12px}
+  /* ============ CONTACT ============ */
+  .contact{background:linear-gradient(180deg,var(--bg) 0%,#0a1a33 100%)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+  .contact-grid h2{font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:20px}
+  .contact-grid h2 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .contact-grid > div > p{color:var(--muted);margin-bottom:30px;font-size:1.05rem}
+  .contact-line{display:flex;gap:14px;align-items:center;padding:13px 0;color:#d5e0ec;font-weight:600;font-size:1rem}
+  .contact-line .ic{width:44px;height:44px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .contact-line svg{width:20px;height:20px;stroke:var(--green)}
+  form{background:var(--surface);border:1px solid var(--line-bright);border-radius:20px;padding:40px;position:relative}
+  form::before{content:"";position:absolute;inset:-1px;border-radius:20px;padding:1px;pointer-events:none;
+    background:linear-gradient(140deg,rgba(69,174,224,.5),transparent 35%,transparent 65%,rgba(141,198,63,.5));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  form h3{font-size:1.3rem;font-weight:700;margin-bottom:24px}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:.8rem;font-weight:700;color:#c4d2e3;margin-bottom:8px;letter-spacing:.03em}
+  .field input,.field textarea{width:100%;border:1px solid var(--line-bright);border-radius:10px;padding:14px 16px;
+    font:inherit;font-size:.96rem;background:rgba(255,255,255,.04);color:#fff;transition:.2s}
+  .field input::placeholder,.field textarea::placeholder{color:#5f7490}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--green);background:rgba(141,198,63,.05);box-shadow:0 0 0 3px rgba(141,198,63,.12)}
+  form button{width:100%;background:var(--grad);color:#06121f;border:none;border-radius:12px;padding:17px;font-size:1.05rem;
+    font-weight:700;cursor:pointer;transition:.25s;font-family:var(--font-b);box-shadow:0 0 28px rgba(141,198,63,.25)}
+  form button:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(141,198,63,.45)}
+  .form-note{font-size:.8rem;color:var(--muted);margin-top:14px;text-align:center}
 
-  /* Contact */
-  .contact{background:var(--navy);color:#fff}
-  .contact .container{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-  .contact h2{font-size:clamp(1.6rem,3vw,2.2rem);margin:8px 0 16px}
-  .contact .tag{color:var(--orange);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem}
-  .contact p{color:#c3d1dd;margin-bottom:22px}
-  .contact-line{display:flex;gap:12px;align-items:center;padding:10px 0;color:#e6edf3;font-weight:600}
-  .contact-line svg{width:20px;height:20px;stroke:var(--orange);flex:0 0 auto}
-  form{background:var(--white);border-radius:14px;padding:34px;color:var(--text)}
-  form h3{color:var(--navy);margin-bottom:18px}
-  .field{margin-bottom:16px}
-  .field label{display:block;font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:6px}
-  .field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font:inherit;font-size:.95rem;background:var(--bg)}
-  .field input:focus,.field textarea:focus{outline:2px solid var(--orange);outline-offset:-1px;background:#fff}
-  form button{width:100%;background:var(--orange);color:#fff;border:none;border-radius:8px;padding:14px;font-size:1rem;font-weight:700;cursor:pointer}
-  form button:hover{background:var(--orange-dark)}
-  .form-note{font-size:.8rem;color:var(--muted);margin-top:10px;text-align:center}
+  /* ============ FOOTER ============ */
+  footer{border-top:1px solid var(--line);padding:56px 0 40px;background:var(--bg)}
+  .foot-grid{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
+  .foot-logo{height:56px;width:auto}
+  .foot-right{text-align:right;color:var(--muted);font-size:.9rem}
+  .foot-right a{color:#c4d2e3;font-weight:600}
+  .foot-right a:hover{color:var(--green)}
+  .foot-tag{margin-top:6px;font-size:.82rem;color:#5f7490}
 
-  /* Footer */
-  footer{background:#0d2142;color:#8aa0b3;padding:34px 0;font-size:.9rem}
-  footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-  footer a{color:#c3d1dd}
-
-  @media(max-width:940px){
-    .hero-grid{grid-template-columns:1fr;gap:44px}
-    .dash{transform:none;max-width:480px}
+  /* ============ RESPONSIVE ============ */
+  @media(max-width:1020px){
+    .hero-inner{grid-template-columns:1fr;gap:56px;padding-top:130px}
+    .dash{transform:none;max-width:560px}
+    .svc-grid,.vis-grid{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:repeat(2,1fr);gap:40px 22px}
+    .steps::before{display:none}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
   }
-  @media(max-width:820px){
-    nav ul{display:none;position:absolute;top:68px;left:0;right:0;background:var(--navy);flex-direction:column;gap:0;padding:10px 24px 20px}
+  @media(max-width:680px){
+    .container{padding:0 22px}
+    nav ul{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(8,17,32,.97);backdrop-filter:blur(18px);
+      flex-direction:column;gap:0;padding:12px 24px 24px;border-bottom:1px solid var(--line);align-items:flex-start}
     nav ul.open{display:flex}
-    nav li{padding:10px 0}
+    nav li{padding:12px 0;width:100%}
     .menu-btn{display:block}
-    .about .container,.contact .container{grid-template-columns:1fr}
-    .stats .container{grid-template-columns:1fr;gap:14px}
-    .btn-ghost{margin-left:0;margin-top:12px}
+    .logo-img{height:50px}
+    header.scrolled .logo-img{height:44px}
+    .svc-grid,.vis-grid,.steps{grid-template-columns:1fr}
+    .band .container{grid-template-columns:1fr}
+    .band-item + .band-item::before{display:none}
+    .band-item{padding:24px 20px;border-top:1px solid var(--line)}
+    .band-item:first-child{border-top:none}
+    .btn-ghost{margin-left:0;margin-top:14px}
+    section{padding:88px 0}
+    .gemba-cap{padding:20px 22px}
   }
 </style>
 </head>
 <body>
+<div class="grid-bg" aria-hidden="true"></div>
 
-<header>
+<header id="hdr">
   <div class="container nav">
     <a class="logo" href="#top" aria-label="North Plant Consulting home">
       <img src="logo-header.svg" alt="North Plant Consulting" class="logo-img">
@@ -216,6 +329,7 @@
       <button class="menu-btn" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
       <ul id="navlinks">
         <li><a href="#services">Services</a></li>
+        <li><a href="#showcase">The System</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#process">How We Work</a></li>
         <li><a class="nav-cta" href="#contact">Get in Touch</a></li>
@@ -224,94 +338,121 @@
   </div>
 </header>
 
+<main>
 <section class="hero" id="top">
-  <div class="container hero-grid">
+  <div class="container hero-inner">
     <div>
-      <span class="kicker">Manufacturing Operations Consulting</span>
-      <h1>Plants run better <em>when the system does.</em></h1>
-      <p>North Plant Consulting brings Toyota Production System discipline to manufacturing plants — production control, standardized work, daily management, and the visual systems that make on-time delivery hold.</p>
-      <a class="btn btn-primary" href="#contact">Request a Consultation</a>
-      <a class="btn btn-ghost" href="#services">Our Services</a>
-    </div>
-    <div class="dash" aria-hidden="true">
-      <div class="dash-head"><span>Plant Daily Dashboard</span><span class="live"><span class="live-dot"></span>Live</span></div>
-      <div class="kpi-row">
-        <div class="kpi"><small>On-Time Delivery</small><b>94.2%</b> <span class="up">▲ 6.8</span></div>
-        <div class="kpi"><small>First-Pass Yield</small><b>98.1%</b> <span class="up">▲ 1.4</span></div>
-        <div class="kpi"><small>Orders Held</small><b>7</b> <span class="down">▼ 12</span></div>
+      <span class="eyebrow">Manufacturing Operations Consulting</span>
+      <h1>Plants run better <span class="grad">when the system does.</span></h1>
+      <p class="lead">North Plant Consulting brings Toyota Production System discipline to manufacturing plants — production control, standardized work, daily management, and the visual systems that make on-time delivery hold.</p>
+      <a class="btn btn-primary" href="#contact">Request a Consultation
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#services">Explore Services</a>
+      <div class="method-strip">
+        <span>Toyota Production System</span>
+        <span>TWI Job Instruction</span>
+        <span>Visual Management</span>
+        <span>Kaizen</span>
       </div>
-      <div class="dash-chart">
-        <small>Scheduled vs. Actual — Today</small>
-        <div class="bars">
-          <div class="bargrp"><span class="bar plan" style="height:62%"></span><span class="bar act" style="height:66%"></span></div>
-          <div class="bargrp"><span class="bar plan" style="height:78%"></span><span class="bar act" style="height:80%"></span></div>
-          <div class="bargrp"><span class="bar plan" style="height:84%"></span><span class="bar miss" style="height:58%"></span></div>
-          <div class="bargrp"><span class="bar plan" style="height:84%"></span><span class="bar act" style="height:88%"></span></div>
-          <div class="bargrp"><span class="bar plan" style="height:90%"></span><span class="bar act" style="height:94%"></span></div>
-          <div class="bargrp"><span class="bar plan" style="height:72%"></span><span class="bar act" style="height:76%"></span></div>
+    </div>
+    <div class="dash-wrap">
+      <div class="dash" aria-hidden="true">
+        <div class="dash-head"><span>Plant Daily Dashboard</span><span class="live"><span class="live-dot"></span>Live</span></div>
+        <div class="kpi-row">
+          <div class="kpi"><small>On-Time Delivery</small><b>94.2%</b> <span class="up">▲ 6.8</span></div>
+          <div class="kpi"><small>First-Pass Yield</small><b>98.1%</b> <span class="up">▲ 1.4</span></div>
+          <div class="kpi"><small>Orders Held</small><b>7</b> <span class="down">▼ 12</span></div>
         </div>
-        <div class="bar-labels"><span>7a</span><span>8a</span><span>9a</span><span>10a</span><span>11a</span><span>12p</span></div>
-        <span class="miss-tag"><span class="miss-dot"></span>9:00 miss — Reason: kitting short, Dept 2</span>
+        <div class="dash-chart">
+          <small>Scheduled vs. Actual — Today</small>
+          <div class="bars">
+            <div class="bargrp"><span class="bar plan" style="height:62%"></span><span class="bar act" style="height:66%"></span></div>
+            <div class="bargrp"><span class="bar plan" style="height:78%"></span><span class="bar act" style="height:80%"></span></div>
+            <div class="bargrp"><span class="bar plan" style="height:84%"></span><span class="bar miss" style="height:58%"></span></div>
+            <div class="bargrp"><span class="bar plan" style="height:84%"></span><span class="bar act" style="height:88%"></span></div>
+            <div class="bargrp"><span class="bar plan" style="height:90%"></span><span class="bar act" style="height:94%"></span></div>
+            <div class="bargrp"><span class="bar plan" style="height:72%"></span><span class="bar act" style="height:76%"></span></div>
+          </div>
+          <div class="bar-labels"><span>7a</span><span>8a</span><span>9a</span><span>10a</span><span>11a</span><span>12p</span></div>
+          <span class="miss-tag"><span class="miss-dot"></span>9:00 miss — Reason: kitting short, Dept 2</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="stats">
+<div class="band">
   <div class="container">
-    <div><b>Toyota-Trained</b><small>TPS &amp; TWI methods, applied on real floors</small></div>
-    <div><b>System-First</b><small>Fix the process before the org chart</small></div>
-    <div><b>Built to Sustain</b><small>Your people run it after we leave</small></div>
+    <div class="band-item reveal"><b>Toyota-Trained</b><small>TPS &amp; TWI methods, applied on real plant floors</small></div>
+    <div class="band-item reveal d1"><b>System-First</b><small>Fix the process before the org chart</small></div>
+    <div class="band-item reveal d2"><b>Built to Sustain</b><small>Your people run it after we leave</small></div>
   </div>
 </div>
 
 <section id="services">
   <div class="container">
-    <div class="sec-head">
-      <span class="tag">What We Do</span>
-      <h2>Seven capabilities that make a plant deliver</h2>
+    <div class="sec-head reveal">
+      <span class="eyebrow">What We Do</span>
+      <h2>Seven capabilities that make a plant <span class="grad">deliver.</span></h2>
       <p>Hands-on operations consulting for manufacturers — grounded in the Toyota Production System and focused on measurable improvement, not binders on a shelf.</p>
     </div>
-    <div class="grid">
-      <div class="card">
+    <div class="svc-grid">
+      <div class="card reveal">
+        <span class="num">01</span>
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/></svg></div>
         <h3>Operational Assessment</h3>
         <p>A structured on-site review of flow, scheduling, staffing, data, and daily management — showing exactly where your plant loses time and money, with a prioritized improvement roadmap.</p>
       </div>
-      <div class="card">
+      <div class="card reveal d1">
+        <span class="num">02</span>
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l6-4v17M13 21V4l6 4v13M8 10h.01M8 14h.01M8 18h.01M16 12h.01M16 16h.01"/></svg></div>
         <h3>Production Control &amp; Scheduling</h3>
         <p>Constraint-based master scheduling, order launch and release rules, and real-time order visibility — so every department knows what to deliver, in what sequence, by when.</p>
       </div>
-      <div class="card">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6.4 6.4l-5 5a1.5 1.5 0 0 0 2 2.2l5.2-4.8a4.5 4.5 0 0 0 6.3-6.3l-2.6 2.6-2.1-2.1 2.6-2z"/></svg></div>
+      <div class="card reveal d2">
+        <span class="num">03</span>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
         <h3>Process Data Capture</h3>
         <p>The shop-floor data most plants never collect — cycle times, miss reasons, order aging, downtime causes — captured simply and reliably, so decisions run on facts instead of anecdotes.</p>
       </div>
-      <div class="card">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div>
+      <div class="card reveal">
+        <span class="num">04</span>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M7 12l3-3 2 2 4-4"/></svg></div>
         <h3>Dashboards &amp; Real-Time Visibility</h3>
         <p>Where every order sits, which department holds it, and how long it's been there — live plant dashboards and hour-by-hour boards the whole floor can see and act on.</p>
       </div>
-      <div class="card">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div class="card reveal d1">
+        <span class="num">05</span>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></div>
         <h3>KPI Systems &amp; Accountability</h3>
         <p>Metric definitions everyone agrees on — OTD, first-pass yield, productivity per labour hour — with cascaded objectives and tiered daily management that turn numbers into ownership.</p>
       </div>
-      <div class="card">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div>
+      <div class="card reveal d2">
+        <span class="num">06</span>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div>
         <h3>Org Design &amp; Capacity Planning</h3>
         <p>Floor org charts with defined spans of control, job descriptions rebuilt against real work, headcount models tied to demand, and skills matrices so cross-coverage is planned — not improvised.</p>
       </div>
-      <div class="card">
-        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div>
+      <div class="card reveal d1">
+        <span class="num">07</span>
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15zM9 7h6M9 11h6"/></svg></div>
         <h3>Training, SOPs &amp; Standard Work</h3>
         <p>Standardized work for every core job, TWI-style train-the-trainer programs, tiered operator certification with visible tracking, and hazard analysis built into every SOP.</p>
       </div>
     </div>
-    <div class="cap-strip">
-      <h3>Deep capabilities we bring inside every engagement</h3>
-      <div class="chips">
+    <div class="marquee reveal" aria-label="Deep capabilities">
+      <div class="marquee-track">
+        <span class="chip">Line balancing &amp; takt analysis</span>
+        <span class="chip">Time studies &amp; station design</span>
+        <span class="chip">Kitting &amp; material presentation</span>
+        <span class="chip">Water-spider delivery routes</span>
+        <span class="chip">A3 &amp; 5-why problem solving</span>
+        <span class="chip">Andon &amp; escalation systems</span>
+        <span class="chip">5S &amp; workplace organization</span>
+        <span class="chip">Quality containment at handoffs</span>
+        <span class="chip">Supervisor &amp; leader development</span>
+        <span class="chip">Succession &amp; tribal-knowledge capture</span>
         <span class="chip">Line balancing &amp; takt analysis</span>
         <span class="chip">Time studies &amp; station design</span>
         <span class="chip">Kitting &amp; material presentation</span>
@@ -327,56 +468,23 @@
   </div>
 </section>
 
-<section class="about" id="about">
-  <div class="container">
-    <div>
-      <span class="tag" style="color:var(--orange);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem">Who We Are</span>
-      <h2>Toyota discipline, applied to your floor</h2>
-      <p>North Plant Consulting is built on Toyota Production System experience — standardized work, TWI-style job instruction, tiered daily management, and visual control, applied hands-on in real plants, not taught from a slide deck.</p>
-      <p>Our approach is system-first: when delivery slips or a department is drowning, the root cause is usually a missing process, not a missing person. We fix the system, then build the roles, training, and cadence that keep it running after we leave.</p>
-      <a class="btn btn-primary" href="#contact">Talk to Us</a>
-    </div>
-    <div class="about-visual">
-      <h3>Why clients choose us</h3>
-      <ul>
-        <li><span class="check">✓</span>Toyota Production System &amp; TWI background — methods proven for decades</li>
-        <li><span class="check">✓</span>System-first: fix the process before touching the org chart</li>
-        <li><span class="check">✓</span>Measurable results: on-time delivery, first-pass yield, productivity per labour hour</li>
-        <li><span class="check">✓</span>Built to sustain — your supervisors and leads run it after we're gone</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="process">
-  <div class="container">
-    <div class="sec-head">
-      <span class="tag">How We Work</span>
-      <h2>A straightforward engagement process</h2>
-    </div>
-    <div class="steps">
-      <div class="step"><h3>Listen</h3><p>A no-cost intro call to understand your operation, your pain points, and what success looks like.</p></div>
-      <div class="step"><h3>Assess</h3><p>On-site or remote review of your operations, maintenance data, and processes to find the biggest opportunities.</p></div>
-      <div class="step"><h3>Plan</h3><p>A prioritized, practical improvement plan with clear owners, timelines, and expected impact.</p></div>
-      <div class="step"><h3>Deliver</h3><p>We stay engaged through implementation so improvements stick — and results show up in your numbers.</p></div>
-    </div>
-  </div>
-</section>
-
 <section class="showcase" id="showcase">
   <div class="container">
-    <div class="sec-head">
-      <span class="tag">The System, Made Visible</span>
-      <h2>What your floor looks like when the system runs it</h2>
-      <p>These aren't stock photos — they're the actual tools we build with your team: hour-by-hour boards, standardized work, and a daily management cadence that escalates problems in hours, not weeks.</p>
+    <div class="sec-head center reveal">
+      <span class="eyebrow">The System, Made Visible</span>
+      <h2>What your floor looks like <span class="grad">when the system runs it.</span></h2>
+      <p>Not stock photos — the actual tools we build with your team: hour-by-hour boards, standardized work, and a daily management cadence that escalates problems in hours, not weeks.</p>
     </div>
-    <div class="gemba">
+    <div class="gemba reveal">
       <img src="floor-dashboard.jpg" alt="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen" width="1600" height="1067" loading="lazy">
-      <div class="gemba-cap"><b>Tier 1, 7:00 AM.</b> The same numbers the executive team sees — live on the floor, where the work happens.</div>
+      <div class="gemba-cap">
+        <span class="big"><b>Tier 1, 7:00 AM.</b> The numbers, live on the floor.</span>
+        <span class="sub">The same dashboard the executive team sees — where the work happens.</span>
+      </div>
     </div>
     <div class="vis-grid">
-      <div class="vis-card">
-        <div class="vis-title"><span>Hour-by-Hour Board — Assembly</span><span>Shift 1</span></div>
+      <div class="vis-card reveal">
+        <div class="vis-title"><span>Hour-by-Hour — Assembly</span><span>Shift 1</span></div>
         <div class="vis-body">
           <table class="hxh">
             <tr><th>Hour</th><th>Plan</th><th>Actual</th><th>Status / Reason</th></tr>
@@ -389,7 +497,7 @@
         </div>
         <p class="vis-cap">Every miss gets a reason code the moment it happens — so "why did it miss" produces data, not arguments.</p>
       </div>
-      <div class="vis-card">
+      <div class="vis-card reveal d1">
         <div class="vis-title"><span>Standardized Work — Frame Build</span><span>Cert. Tier 3</span></div>
         <div class="vis-body">
           <div class="sw-step"><span class="sw-num">1</span>Stage components per kit list <span class="sw-flag sw-q">Q</span><span class="sw-time">1.5 min</span></div>
@@ -399,9 +507,9 @@
           <div class="sw-total"><span>Cycle: 8.0 min</span><span>Takt: 9.2 min</span></div>
           <div class="takt-bar"><div class="takt-fill"></div></div>
         </div>
-        <p class="vis-cap">One best way, written down — with quality checkpoints and safety callouts built into the sequence, TWI-style.</p>
+        <p class="vis-cap">One best way, written down — quality checkpoints and safety callouts built into the sequence, TWI-style.</p>
       </div>
-      <div class="vis-card">
+      <div class="vis-card reveal d2">
         <div class="vis-title"><span>Tiered Daily Management</span><span>15 min each</span></div>
         <div class="vis-body">
           <div class="tier"><div class="tier-bar t1">Tier 1 · Team lead</div><small>Start of shift, at the board</small></div>
@@ -416,49 +524,91 @@
   </div>
 </section>
 
-<section class="contact" id="contact">
+<section id="about">
+  <div class="container about-grid">
+    <div class="reveal">
+      <span class="eyebrow">Who We Are</span>
+      <h2>Toyota discipline, <span class="grad">applied to your floor.</span></h2>
+      <p>North Plant Consulting is built on Toyota Production System experience — standardized work, TWI-style job instruction, tiered daily management, and visual control, applied hands-on in real plants, not taught from a slide deck.</p>
+      <p>Our approach is system-first: when delivery slips or a department is drowning, the root cause is usually a missing process, not a missing person. We fix the system, then build the roles, training, and cadence that keep it running after we leave.</p>
+      <a class="btn btn-primary" href="#contact" style="margin-top:14px">Talk to Us
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="about-panel reveal d1">
+      <h3>Why clients choose us</h3>
+      <ul>
+        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Toyota Production System &amp; TWI background — methods proven for decades</li>
+        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>System-first: fix the process before touching the org chart</li>
+        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Measurable results: on-time delivery, first-pass yield, productivity per labour hour</li>
+        <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Built to sustain — your supervisors and leads run it after we're gone</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="process">
   <div class="container">
-    <div>
-      <span class="tag">Contact</span>
-      <h2>Let's talk about your plant</h2>
+    <div class="sec-head center reveal">
+      <span class="eyebrow">How We Work</span>
+      <h2>A straightforward <span class="grad">engagement process.</span></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><span class="dot">01</span><h3>Listen</h3><p>A no-cost intro call to understand your operation, your pain points, and what success looks like.</p></div>
+      <div class="step reveal d1"><span class="dot">02</span><h3>Assess</h3><p>On-site or remote review of your operations, data, and processes to find the biggest opportunities.</p></div>
+      <div class="step reveal d2"><span class="dot">03</span><h3>Plan</h3><p>A prioritized, practical improvement plan with clear owners, timelines, and expected impact.</p></div>
+      <div class="step reveal d3"><span class="dot">04</span><h3>Deliver</h3><p>We stay engaged through implementation so improvements stick — and results show up in your numbers.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="reveal">
+      <span class="eyebrow">Contact</span>
+      <h2>Let's talk about <span class="grad">your plant.</span></h2>
       <p>Tell us a bit about your operation and the challenge you're facing. We'll follow up within one business day.</p>
       <div class="contact-line">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></span>
         keith.h@northplantconsulting.com
       </div>
       <div class="contact-line">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
         Serving industrial &amp; manufacturing clients across North America
       </div>
     </div>
-    <form action="https://formspree.io/f/maeyeqno" method="POST">
+    <form class="reveal d1" action="https://formspree.io/f/maeyeqno" method="POST">
       <h3>Request a Consultation</h3>
       <div class="field">
         <label for="name">Name</label>
-        <input id="name" name="name" type="text" required autocomplete="name">
+        <input id="name" name="name" type="text" required autocomplete="name" placeholder="Your name">
       </div>
       <div class="field">
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" required autocomplete="email">
+        <input id="email" name="email" type="email" required autocomplete="email" placeholder="you@company.com">
       </div>
       <div class="field">
         <label for="company">Company / Facility</label>
-        <input id="company" name="company" type="text">
+        <input id="company" name="company" type="text" placeholder="Plant or company name">
       </div>
       <div class="field">
         <label for="message">How can we help?</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
+        <textarea id="message" name="message" rows="4" required placeholder="Tell us about your operation and the challenge you're facing…"></textarea>
       </div>
       <button type="submit">Send Message</button>
       <p class="form-note">We respond within one business day.</p>
     </form>
   </div>
 </section>
+</main>
 
 <footer>
-  <div class="container">
-    <span>© <span id="yr"></span> North Plant Consulting — Plants run better when the system does.</span>
-    <span><a href="mailto:keith.h@northplantconsulting.com">keith.h@northplantconsulting.com</a></span>
+  <div class="container foot-grid">
+    <img src="logo-header.svg" alt="North Plant Consulting" class="foot-logo">
+    <div class="foot-right">
+      <a href="mailto:keith.h@northplantconsulting.com">keith.h@northplantconsulting.com</a>
+      <div class="foot-tag">© <span id="yr"></span> North Plant Consulting — Plants run better when the system does.</div>
+    </div>
   </div>
 </footer>
 
@@ -466,7 +616,22 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
   document.querySelectorAll('#navlinks a').forEach(a =>
     a.addEventListener('click', () => document.getElementById('navlinks').classList.remove('open')));
-</script>
 
+  const hdr = document.getElementById('hdr');
+  addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('.card').forEach(c => {
+    c.addEventListener('mousemove', e => {
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+</script>
 </body>
 </html>
