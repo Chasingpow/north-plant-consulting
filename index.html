@@ -138,6 +138,15 @@
   .miss-tag{display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:rgba(232,93,79,.12);
     border:1px solid rgba(232,93,79,.35);color:#ffb1a6;font-size:.72rem;font-weight:600;border-radius:8px;padding:6px 12px}
   .miss-dot{width:7px;height:7px;border-radius:50%;background:var(--red)}
+  .clock{font-family:var(--font-d);font-size:.78rem;color:#c4d2e3;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+  .bar.cur{animation:curpulse 1.4s ease-in-out infinite}
+  @keyframes curpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.45)}}
+  .feed{margin-top:12px;border-top:1px solid var(--line);padding-top:11px;display:flex;align-items:center;gap:9px;height:32px;overflow:hidden;font-size:.72rem;color:#9fb8d4;font-weight:600}
+  .feed-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-2);flex:0 0 auto;box-shadow:0 0 8px rgba(69,174,224,.8)}
+  .feed-dot.g{background:var(--green);box-shadow:0 0 8px rgba(141,198,63,.8)}
+  .feed-dot.r{background:var(--red);box-shadow:0 0 8px rgba(232,93,79,.8)}
+  #feed-txt.slide{animation:slideup .45s ease}
+  @keyframes slideup{from{transform:translateY(15px);opacity:0}}
 
   /* ============ PROOF BAND ============ */
   .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
@@ -362,9 +371,9 @@
     </div>
     <div class="dash-wrap">
       <div class="dash" aria-hidden="true">
-        <div class="dash-head"><span>Plant Daily Dashboard</span><span class="live"><span class="live-dot"></span>Live</span></div>
+        <div class="dash-head"><span>Plant Daily Dashboard</span><span style="display:flex;align-items:center;gap:14px"><span class="clock" id="dash-clock">00:00:00</span><span class="live"><span class="live-dot"></span>Live</span></span></div>
         <div class="kpi-row">
-          <div class="kpi"><small>On-Time Delivery</small><b id="k-otd">94.2%</b> <span class="up" id="k-otd-d">▲ 6.8</span></div>
+          <div class="kpi"><small>On-Time Delivery</small><b id="k-otd">94.2%</b> <span class="up" id="k-otd-d">▲ 6.8</span><canvas id="spark" width="200" height="26" style="display:block;width:100%;height:26px;margin-top:8px"></canvas></div>
           <div class="kpi"><small>First-Pass Yield</small><b id="k-fpy">98.1%</b> <span class="up" id="k-fpy-d">▲ 1.4</span></div>
           <div class="kpi"><small>Orders Held</small><b id="k-held">7</b> <span class="down" id="k-held-d">▼ 12</span></div>
         </div>
@@ -373,6 +382,7 @@
           <div class="bars" id="bars"></div>
           <div class="bar-labels" id="bar-labels"></div>
           <span class="miss-tag" id="miss-tag" style="visibility:hidden"><span class="miss-dot"></span><span id="miss-txt"></span></span>
+          <div class="feed"><span class="feed-dot" id="feed-dot"></span><span id="feed-txt">Shift 1 started — all cells manned</span></div>
         </div>
       </div>
     </div>
@@ -665,7 +675,7 @@
         const [plan, act] = grps[i].children;
         plan.style.height = s.plan + '%';
         act.style.height = Math.min(s.act, 96) + '%';
-        act.className = 'bar ' + (s.miss ? 'miss' : 'act');
+        act.className = 'bar ' + (s.miss ? 'miss' : 'act') + (i === data.length - 1 && !s.done ? ' cur' : '');
       });
       labelsEl.innerHTML = data.map(s => '<span>' + s.label + '</span>').join('');
       const lastMiss = [...data].reverse().find(s => s.miss && s.done);
@@ -711,7 +721,54 @@
       dHeld.textContent = (held <= hOld ? '▼ ' : '▲ ') + Math.abs(held - hOld || 1);
       dHeld.className = held <= hOld ? 'down' : 'up';   // fewer held = good, shown red-down style stays subtle
       render();
-    }, 2600);
+      // sparkline
+      spark.push(otd); if (spark.length > 42) spark.shift();
+      drawSpark();
+    }, 1900);
+
+    // OTD sparkline
+    const sparkCv = document.getElementById('spark'), sctx = sparkCv.getContext('2d');
+    const spark = Array.from({length: 42}, () => 93.5 + Math.random() * 1.6);
+    function drawSpark(){
+      const w = sparkCv.width, h = sparkCv.height;
+      sctx.clearRect(0, 0, w, h);
+      const min = Math.min(...spark) - 0.3, max = Math.max(...spark) + 0.3;
+      sctx.beginPath();
+      spark.forEach((v, i) => {
+        const x = i / (spark.length - 1) * w, y = h - 3 - (v - min) / (max - min) * (h - 6);
+        i ? sctx.lineTo(x, y) : sctx.moveTo(x, y);
+      });
+      sctx.strokeStyle = 'rgba(141,198,63,.85)'; sctx.lineWidth = 1.6;
+      sctx.shadowColor = 'rgba(141,198,63,.6)'; sctx.shadowBlur = 4;
+      sctx.stroke(); sctx.shadowBlur = 0;
+      const lx = w, lastV = spark[spark.length - 1];
+      const ly = h - 3 - (lastV - min) / (max - min) * (h - 6);
+      sctx.fillStyle = '#8DC63F';
+      sctx.beginPath(); sctx.arc(lx - 2, ly, 2.2, 0, 7); sctx.fill();
+    }
+    drawSpark();
+
+    // live clock
+    const clockEl = document.getElementById('dash-clock');
+    setInterval(() => {
+      const d = new Date();
+      clockEl.textContent = [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, '0')).join(':');
+    }, 1000);
+
+    // activity feed
+    const feedTxt = document.getElementById('feed-txt'), feedDot = document.getElementById('feed-dot');
+    const FEED = [
+      ['g','Order #%n released to Assembly'], ['b','Kit staged — Cell %c'], ['g','Order #%n shipped — on time'],
+      ['b','Tier 1 huddle logged — Dept %c'], ['g','Andon cleared — Cell %c (4 min)'], ['b','Changeover complete — Mill'],
+      ['g','First-pass check OK — Order #%n'], ['b','Water spider route %c dispatched'], ['r','Andon raised — Cell %c'],
+      ['g','SOP sign-off — operator certified Tier 2'], ['b','Order #%n staged for finishing'], ['g','Hourly target met — Dept %c']
+    ];
+    setInterval(() => {
+      const [k, tpl] = FEED[Math.floor(Math.random() * FEED.length)];
+      feedTxt.textContent = tpl.replace('%n', 4100 + Math.floor(Math.random() * 800)).replace('%c', 1 + Math.floor(Math.random() * 5));
+      feedDot.className = 'feed-dot ' + (k === 'g' ? 'g' : k === 'r' ? 'r' : '');
+      feedTxt.classList.remove('slide'); void feedTxt.offsetWidth; feedTxt.classList.add('slide');
+    }, 2300);
   })();
 
   // scroll progress beam
