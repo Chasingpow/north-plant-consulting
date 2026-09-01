@@ -321,6 +321,27 @@
     .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
   }
   @media(max-width:680px){
+    :root{
+      --bg:#0f2038;
+      --bg-2:#142845;
+      --surface:rgba(255,255,255,.075);
+      --surface-2:rgba(255,255,255,.11);
+      --line:rgba(255,255,255,.15);
+      --line-bright:rgba(255,255,255,.28);
+      --text:#f6f9fc;
+      --muted:#c2cfdf;
+    }
+    .hero{background:
+      radial-gradient(ellipse 55% 60% at 78% 28%,rgba(46,134,200,.28),transparent 65%),
+      radial-gradient(ellipse 40% 45% at 12% 78%,rgba(141,198,63,.16),transparent 65%),
+      linear-gradient(180deg,#16304f 0%,var(--bg) 100%)}
+    header{background:rgba(18,36,62,.72)}
+    header.scrolled{background:rgba(18,36,62,.92)}
+    .contact{background:linear-gradient(180deg,var(--bg) 0%,#16304f 100%)}
+    .dash{background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.05))}
+    nav a{color:#dbe5f0}
+    .band-item small,.step p,.card p,.vis-card p.vis-cap{color:#c2cfdf}
+    .grid-bg{opacity:.7}
     .container{padding:0 20px}
     .hero-inner{padding:126px 20px 70px;gap:40px}
     .method-strip{gap:12px 18px;margin-top:38px}
