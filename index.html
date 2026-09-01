@@ -987,7 +987,8 @@
       requestAnimationFrame(frame);
     }
     setup();
-    addEventListener('resize', setup);
+    addEventListener('load', () => { if (cv.offsetWidth !== W || cv.offsetHeight !== H) setup(); });
+    new ResizeObserver(() => { if (cv.offsetWidth !== W || cv.offsetHeight !== H) setup(); }).observe(cv);
     requestAnimationFrame(frame);
   })();
 </script>
