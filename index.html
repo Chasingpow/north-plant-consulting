@@ -129,11 +129,7 @@
   .dash-chart small{display:block;font-size:.63rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#7d94b0;margin-bottom:12px}
   .bars{display:flex;align-items:flex-end;gap:9px;height:96px}
   .bargrp{flex:1;display:flex;align-items:flex-end;gap:4px;height:100%}
-  .bar{flex:1;border-radius:4px 4px 0 0;transform-origin:bottom;animation:rise 1s cubic-bezier(.2,.7,.3,1) backwards}
-  .bargrp:nth-child(1) .bar{animation-delay:.15s}.bargrp:nth-child(2) .bar{animation-delay:.3s}
-  .bargrp:nth-child(3) .bar{animation-delay:.45s}.bargrp:nth-child(4) .bar{animation-delay:.6s}
-  .bargrp:nth-child(5) .bar{animation-delay:.75s}.bargrp:nth-child(6) .bar{animation-delay:.9s}
-  @keyframes rise{from{transform:scaleY(0)}}
+  .bar{flex:1;border-radius:4px 4px 0 0;transform-origin:bottom;transition:height 1s cubic-bezier(.2,.7,.3,1),background .6s}
   .bar.plan{background:rgba(255,255,255,.16)}
   .bar.act{background:linear-gradient(180deg,var(--green),var(--green-2));box-shadow:0 0 14px rgba(141,198,63,.35)}
   .bar.miss{background:linear-gradient(180deg,#ff8a7d,var(--red));box-shadow:0 0 14px rgba(232,93,79,.35)}
@@ -368,22 +364,15 @@
       <div class="dash" aria-hidden="true">
         <div class="dash-head"><span>Plant Daily Dashboard</span><span class="live"><span class="live-dot"></span>Live</span></div>
         <div class="kpi-row">
-          <div class="kpi"><small>On-Time Delivery</small><b>94.2%</b> <span class="up">▲ 6.8</span></div>
-          <div class="kpi"><small>First-Pass Yield</small><b>98.1%</b> <span class="up">▲ 1.4</span></div>
-          <div class="kpi"><small>Orders Held</small><b>7</b> <span class="down">▼ 12</span></div>
+          <div class="kpi"><small>On-Time Delivery</small><b id="k-otd">94.2%</b> <span class="up" id="k-otd-d">▲ 6.8</span></div>
+          <div class="kpi"><small>First-Pass Yield</small><b id="k-fpy">98.1%</b> <span class="up" id="k-fpy-d">▲ 1.4</span></div>
+          <div class="kpi"><small>Orders Held</small><b id="k-held">7</b> <span class="down" id="k-held-d">▼ 12</span></div>
         </div>
         <div class="dash-chart">
           <small>Scheduled vs. Actual — Today</small>
-          <div class="bars">
-            <div class="bargrp"><span class="bar plan" style="height:62%"></span><span class="bar act" style="height:66%"></span></div>
-            <div class="bargrp"><span class="bar plan" style="height:78%"></span><span class="bar act" style="height:80%"></span></div>
-            <div class="bargrp"><span class="bar plan" style="height:84%"></span><span class="bar miss" style="height:58%"></span></div>
-            <div class="bargrp"><span class="bar plan" style="height:84%"></span><span class="bar act" style="height:88%"></span></div>
-            <div class="bargrp"><span class="bar plan" style="height:90%"></span><span class="bar act" style="height:94%"></span></div>
-            <div class="bargrp"><span class="bar plan" style="height:72%"></span><span class="bar act" style="height:76%"></span></div>
-          </div>
-          <div class="bar-labels"><span>7a</span><span>8a</span><span>9a</span><span>10a</span><span>11a</span><span>12p</span></div>
-          <span class="miss-tag"><span class="miss-dot"></span>9:00 miss — Reason: kitting short, Dept 2</span>
+          <div class="bars" id="bars"></div>
+          <div class="bar-labels" id="bar-labels"></div>
+          <span class="miss-tag" id="miss-tag" style="visibility:hidden"><span class="miss-dot"></span><span id="miss-txt"></span></span>
         </div>
       </div>
     </div>
@@ -640,6 +629,90 @@
       c.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
+
+  // ===== Live dashboard simulation =====
+  (function(){
+    const barsEl = document.getElementById('bars'), labelsEl = document.getElementById('bar-labels');
+    if (!barsEl) return;
+    const REASONS = ['kitting short, Dept 2','changeover overrun — Mill','andon: quality hold, Cell 3','material wait — Veneer','staffing gap, Shift 1','torque tool down, Cell 4'];
+    const SLOTS = 6;
+    let hour = 7;                       // 7 => "7a"
+    let data = [];                      // {plan, act, done, miss, label}
+    let otd = 94.2, fpy = 98.1, held = 7;
+
+    const fmtH = h => { const x = ((h - 1) % 12) + 1; return x + (h % 24 < 12 ? 'a' : 'p'); };
+    function newSlot(){
+      const plan = 62 + Math.random() * 30;
+      const s = { plan, act: 6 + Math.random() * 10, done: false, miss: false, label: fmtH(hour) };
+      hour++;
+      return s;
+    }
+    for (let i = 0; i < SLOTS; i++){
+      const s = newSlot();
+      if (i < SLOTS - 1){
+        s.done = true;
+        s.miss = Math.random() < 0.18;
+        s.act = s.miss ? s.plan * (0.6 + Math.random() * 0.12) : s.plan * (0.98 + Math.random() * 0.1);
+      }
+      data.push(s);
+    }
+    // build DOM once
+    barsEl.innerHTML = data.map(() =>
+      '<div class="bargrp"><span class="bar plan"></span><span class="bar act"></span></div>').join('');
+    function render(){
+      const grps = barsEl.children;
+      data.forEach((s, i) => {
+        const [plan, act] = grps[i].children;
+        plan.style.height = s.plan + '%';
+        act.style.height = Math.min(s.act, 96) + '%';
+        act.className = 'bar ' + (s.miss ? 'miss' : 'act');
+      });
+      labelsEl.innerHTML = data.map(s => '<span>' + s.label + '</span>').join('');
+      const lastMiss = [...data].reverse().find(s => s.miss && s.done);
+      const tag = document.getElementById('miss-tag');
+      if (lastMiss){
+        document.getElementById('miss-txt').textContent =
+          lastMiss.label.replace(/[ap]$/, ':00') + ' miss — Reason: ' + lastMiss.reason;
+        tag.style.visibility = 'visible';
+      } else tag.style.visibility = 'hidden';
+    }
+    data.forEach(s => { if (s.miss) s.reason = REASONS[Math.floor(Math.random() * REASONS.length)]; });
+    render();
+
+    const tween = (el, from, to, suffix, dp) => {
+      const t0 = performance.now();
+      (function step(t){
+        const k = Math.min(1, (t - t0) / 700), v = from + (to - from) * (1 - Math.pow(1 - k, 3));
+        el.textContent = v.toFixed(dp) + suffix;
+        if (k < 1) requestAnimationFrame(step);
+      })(performance.now());
+    };
+
+    setInterval(() => {
+      const cur = data[data.length - 1];
+      cur.act += 8 + Math.random() * 14;
+      if (cur.act >= cur.plan * 0.92 || cur.act > 92){
+        cur.done = true;
+        if (Math.random() < 0.22){ cur.miss = true; cur.act = cur.plan * (0.6 + Math.random() * 0.12); cur.reason = REASONS[Math.floor(Math.random() * REASONS.length)]; }
+        data.shift(); data.push(newSlot());
+      }
+      const oOld = otd, fOld = fpy, hOld = held;
+      otd = Math.max(90.5, Math.min(97.8, otd + (Math.random() - 0.46) * 0.7));
+      fpy = Math.max(96.8, Math.min(99.4, fpy + (Math.random() - 0.48) * 0.3));
+      if (Math.random() < 0.4) held = Math.max(3, Math.min(14, held + (Math.random() < 0.45 ? 1 : -1)));
+      tween(document.getElementById('k-otd'), oOld, otd, '%', 1);
+      tween(document.getElementById('k-fpy'), fOld, fpy, '%', 1);
+      if (held !== hOld) document.getElementById('k-held').textContent = held;
+      const dOtd = document.getElementById('k-otd-d'), dFpy = document.getElementById('k-fpy-d'), dHeld = document.getElementById('k-held-d');
+      dOtd.textContent = (otd >= oOld ? '▲ ' : '▼ ') + Math.abs(otd - oOld).toFixed(1);
+      dOtd.className = otd >= oOld ? 'up' : 'down';
+      dFpy.textContent = (fpy >= fOld ? '▲ ' : '▼ ') + Math.abs(fpy - fOld).toFixed(1);
+      dFpy.className = fpy >= fOld ? 'up' : 'down';
+      dHeld.textContent = (held <= hOld ? '▼ ' : '▲ ') + Math.abs(held - hOld || 1);
+      dHeld.className = held <= hOld ? 'down' : 'up';   // fewer held = good, shown red-down style stays subtle
+      render();
+    }, 2600);
+  })();
 
   // scroll progress beam
   const prog = document.getElementById('progress');
