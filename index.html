@@ -197,24 +197,6 @@
   .showcase{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 50%,var(--bg) 100%)}
   .gemba{position:relative;border-radius:24px;overflow:hidden;margin-bottom:26px;
     border:1px solid var(--line-bright);box-shadow:0 40px 100px rgba(0,0,0,.5)}
-  .gemba-media{position:relative;container-type:inline-size}
-  /* live chart overlaid on the photo's TV screen */
-  .tv-chart{position:absolute;left:4.3%;top:22.8%;width:31.6%;height:27.2%;z-index:3;
-    background:#122849;border:1px solid rgba(159,179,205,.25);border-radius:1cqw;
-    padding:1.1cqw 1.3cqw;display:flex;flex-direction:column}
-  .tv-chart .tvc-title{font-size:1.05cqw;font-weight:700;letter-spacing:.08em;color:#9fb3cd;text-transform:uppercase;font-family:var(--font-d)}
-  .tv-bars{flex:1;display:flex;align-items:flex-end;gap:1cqw;margin-top:.9cqw}
-  .tv-grp{flex:1;display:flex;align-items:flex-end;gap:.32cqw;height:100%}
-  .tv-bar{flex:1;border-radius:.3cqw .3cqw 0 0;transition:height 1s cubic-bezier(.2,.7,.3,1),background .5s}
-  .tv-bar.p{background:#7e8ea0}
-  .tv-bar.a{background:linear-gradient(180deg,#8DC63F,#57B02C)}
-  .tv-bar.m{background:linear-gradient(180deg,#f08373,#e2685a)}
-  .tv-labels{display:flex;gap:1cqw;margin-top:.4cqw}
-  .tv-labels span{flex:1;text-align:center;font-size:.85cqw;color:#7f93ac}
-  .tv-miss{display:flex;align-items:center;gap:.5cqw;margin-top:.7cqw;background:rgba(226,104,90,.14);
-    border:1px solid rgba(226,104,90,.45);border-radius:.5cqw;padding:.45cqw .9cqw;
-    color:#f5b8ae;font-size:.95cqw;font-weight:600;width:max-content;max-width:100%;white-space:nowrap;overflow:hidden}
-  .tv-miss i{width:.6cqw;height:.6cqw;border-radius:50%;background:#e2685a;animation:pulse 1.6s infinite;flex:0 0 auto}
   .gemba::after{content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;
     background:linear-gradient(180deg,transparent 55%,rgba(8,17,32,.92) 100%)}
   .gemba img{display:block;width:100%;height:auto}
@@ -531,15 +513,7 @@
       <p>Not stock photos — the actual tools we build with your team: hour-by-hour boards, standardized work, and a daily management cadence that escalates problems in hours, not weeks.</p>
     </div>
     <div class="gemba reveal">
-      <div class="gemba-media">
-        <img src="floor-dashboard.jpg" alt="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen" width="1600" height="1067" loading="lazy">
-        <div class="tv-chart" aria-hidden="true">
-          <span class="tvc-title">Scheduled vs. Actual — Today</span>
-          <div class="tv-bars" id="tv-bars"></div>
-          <div class="tv-labels" id="tv-labels"></div>
-          <span class="tv-miss"><i></i><span id="tv-miss-txt">9:00 miss — Reason: kitting short, Dept 2</span></span>
-        </div>
-      </div>
+      <img src="floor-dashboard.jpg" alt="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen" width="1600" height="1067" loading="lazy">
       <div class="gemba-cap">
         <span class="big"><b>Tier 1, 7:00 AM.</b> The numbers, live on the floor.</span>
         <span class="sub">The same dashboard the executive team sees — where the work happens.</span>
@@ -910,36 +884,6 @@
       setTimeout(tierCycle, d + 3200);
     }
     tierCycle();
-
-    // --- live chart on the photo's TV screen ---
-    const tvBars = document.getElementById('tv-bars'), tvLabels = document.getElementById('tv-labels');
-    if (tvBars){
-      const N = 6, TV_REASONS = ['kitting short, Dept 2','changeover overrun — Mill','material wait — Veneer','andon: quality hold, Cell 3','staffing gap, Shift 1'];
-      let tvHour = 7;
-      const fmt = h => (((h - 1) % 12) + 1) + (h % 24 < 12 ? 'a' : 'p');
-      tvBars.innerHTML = Array.from({length: N}, () =>
-        '<div class="tv-grp"><span class="tv-bar p"></span><span class="tv-bar a"></span></div>').join('');
-      function tvTick(roll){
-        if (roll) tvHour++;
-        const missIdx = Math.random() < 0.7 ? 1 + Math.floor(Math.random() * (N - 1)) : -1;
-        [...tvBars.children].forEach((g, i) => {
-          const [p, a] = g.children;
-          const plan = 55 + Math.random() * 35;
-          p.style.height = plan + '%';
-          const miss = i === missIdx;
-          a.style.height = (miss ? plan * 0.66 : Math.min(96, plan * (0.98 + Math.random() * 0.12))) + '%';
-          a.className = 'tv-bar ' + (miss ? 'm' : 'a');
-        });
-        tvLabels.innerHTML = Array.from({length: N}, (_, i) => '<span>' + fmt(tvHour + i) + '</span>').join('');
-        const mt = document.getElementById('tv-miss-txt'), tag = mt.parentElement;
-        if (missIdx >= 0){
-          mt.textContent = fmt(tvHour + missIdx).replace(/[ap]$/, ':00') + ' miss — Reason: ' + TV_REASONS[Math.floor(Math.random() * TV_REASONS.length)];
-          tag.style.visibility = 'visible';
-        } else tag.style.visibility = 'hidden';
-      }
-      tvTick(false);
-      setInterval(() => tvTick(true), 3400);
-    }
   })();
 
   // scroll progress beam
