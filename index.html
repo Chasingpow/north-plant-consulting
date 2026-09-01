@@ -236,7 +236,20 @@
   .t2{width:47%;background:linear-gradient(90deg,#9fd44f,#78b834)}
   .t3{width:36%;background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#fff}
   .t4{width:27%;background:#173A63;color:#fff}
-  .tier-arrow{text-align:center;color:var(--green);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:6px 0 10px}
+  .tier-arrow{text-align:center;color:var(--green);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:6px 0 10px;transition:.3s}
+  /* live showcase animations */
+  #hxh-body tr{transition:opacity .5s,transform .5s}
+  #hxh-body tr.pending{opacity:.18}
+  #hxh-body tr.pop{animation:rowpop .5s ease}
+  @keyframes rowpop{from{opacity:.18;transform:translateX(-8px)}}
+  .sw-step{transition:.35s;opacity:.55}
+  .sw-step.done{opacity:.85}
+  .sw-step.active{opacity:1;border-color:var(--green);background:rgba(141,198,63,.09);box-shadow:0 0 16px rgba(141,198,63,.14);transform:translateX(3px)}
+  .sw-step.active .sw-num{animation:pulse 1.2s infinite}
+  .takt-fill{transition:width 1.4s linear}
+  .tier-bar{transition:.4s;opacity:.45;box-shadow:none}
+  .tier.active .tier-bar{opacity:1;transform:translateX(5px);box-shadow:0 0 22px rgba(141,198,63,.3)}
+  .tier.done .tier-bar{opacity:.8}
 
   /* ============ ABOUT ============ */
   .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
@@ -494,36 +507,38 @@
         <div class="vis-title"><span>Hour-by-Hour — Assembly</span><span>Shift 1</span></div>
         <div class="vis-body">
           <table class="hxh">
-            <tr><th>Hour</th><th>Plan</th><th>Actual</th><th>Status / Reason</th></tr>
-            <tr><td>7–8</td><td>12</td><td>12</td><td><span class="ok-pill">On plan</span></td></tr>
-            <tr><td>8–9</td><td>12</td><td>13</td><td><span class="ok-pill">+1 ahead</span></td></tr>
-            <tr><td>9–10</td><td>12</td><td>8</td><td><span class="miss-pill">Kitting short — R04</span></td></tr>
-            <tr><td>10–11</td><td>12</td><td>12</td><td><span class="ok-pill">Recovered</span></td></tr>
-            <tr><td>11–12</td><td>12</td><td>12</td><td><span class="ok-pill">On plan</span></td></tr>
+            <thead><tr><th>Hour</th><th>Plan</th><th>Actual</th><th>Status / Reason</th></tr></thead>
+            <tbody id="hxh-body">
+              <tr><td>7–8</td><td>12</td><td>12</td><td><span class="ok-pill">On plan</span></td></tr>
+              <tr><td>8–9</td><td>12</td><td>13</td><td><span class="ok-pill">+1 ahead</span></td></tr>
+              <tr><td>9–10</td><td>12</td><td>8</td><td><span class="miss-pill">Kitting short — R04</span></td></tr>
+              <tr><td>10–11</td><td>12</td><td>12</td><td><span class="ok-pill">Recovered</span></td></tr>
+              <tr><td>11–12</td><td>12</td><td>12</td><td><span class="ok-pill">On plan</span></td></tr>
+            </tbody>
           </table>
         </div>
         <p class="vis-cap">Every miss gets a reason code the moment it happens — so "why did it miss" produces data, not arguments.</p>
       </div>
       <div class="vis-card reveal d1">
         <div class="vis-title"><span>Standardized Work — Frame Build</span><span>Cert. Tier 3</span></div>
-        <div class="vis-body">
+        <div class="vis-body" id="sw-body">
           <div class="sw-step"><span class="sw-num">1</span>Stage components per kit list <span class="sw-flag sw-q">Q</span><span class="sw-time">1.5 min</span></div>
           <div class="sw-step"><span class="sw-num">2</span>Fixture &amp; clamp frame <span class="sw-flag sw-s">S</span><span class="sw-time">2.0 min</span></div>
           <div class="sw-step"><span class="sw-num">3</span>Fasten joints — torque spec <span class="sw-flag sw-q">Q</span><span class="sw-time">3.5 min</span></div>
           <div class="sw-step"><span class="sw-num">4</span>Gauge check &amp; sign-off <span class="sw-flag sw-q">Q</span><span class="sw-time">1.0 min</span></div>
-          <div class="sw-total"><span>Cycle: 8.0 min</span><span>Takt: 9.2 min</span></div>
-          <div class="takt-bar"><div class="takt-fill"></div></div>
+          <div class="sw-total"><span id="sw-cycle">Cycle: 0.0 min</span><span>Takt: 9.2 min</span></div>
+          <div class="takt-bar"><div class="takt-fill" id="takt-fill" style="width:0%"></div></div>
         </div>
         <p class="vis-cap">One best way, written down — quality checkpoints and safety callouts built into the sequence, TWI-style.</p>
       </div>
       <div class="vis-card reveal d2">
         <div class="vis-title"><span>Tiered Daily Management</span><span>15 min each</span></div>
-        <div class="vis-body">
+        <div class="vis-body" id="tier-body">
           <div class="tier"><div class="tier-bar t1">Tier 1 · Team lead</div><small>Start of shift, at the board</small></div>
           <div class="tier"><div class="tier-bar t2">Tier 2 · Supervisor</div><small>Department misses &amp; blockers</small></div>
           <div class="tier"><div class="tier-bar t3">Tier 3 · Plant manager</div><small>Cross-department conflicts</small></div>
           <div class="tier"><div class="tier-bar t4">Tier 4 · Executive</div><small>Resources &amp; priorities</small></div>
-          <div class="tier-arrow">Problems escalate in hours — not weeks</div>
+          <div class="tier-arrow" id="tier-status">Problems escalate in hours — not weeks</div>
         </div>
         <p class="vis-cap">A standing cadence with a defined escalation path, so nothing waits for the monthly meeting to get unstuck.</p>
       </div>
@@ -769,6 +784,89 @@
       feedDot.className = 'feed-dot ' + (k === 'g' ? 'g' : k === 'r' ? 'r' : '');
       feedTxt.classList.remove('slide'); void feedTxt.offsetWidth; feedTxt.classList.add('slide');
     }, 2300);
+  })();
+
+  // ===== Live showcase cards =====
+  (function(){
+    const hxhBody = document.getElementById('hxh-body');
+    if (!hxhBody) return;
+
+    // --- hour-by-hour: rows fill in, then board rolls to new hours ---
+    const HXH_REASONS = ['Kitting short — R04','Changeover over — R11','Material wait — R02','Andon hold — R07','Staffing gap — R09'];
+    let hxhStart = 7;
+    function hxhCycle(){
+      const rows = [];
+      for (let i = 0; i < 5; i++){
+        const h1 = ((hxhStart + i - 1) % 12) + 1, h2 = ((hxhStart + i) % 12) + 1;
+        const miss = Math.random() < 0.2;
+        const act = miss ? 6 + Math.floor(Math.random() * 4) : 12 + (Math.random() < 0.25 ? 1 : 0);
+        const status = miss
+          ? '<span class="miss-pill">' + HXH_REASONS[Math.floor(Math.random() * HXH_REASONS.length)] + '</span>'
+          : (act > 12 ? '<span class="ok-pill">+' + (act - 12) + ' ahead</span>'
+            : (i > 0 && rows[i-1] && rows[i-1].miss ? '<span class="ok-pill">Recovered</span>' : '<span class="ok-pill">On plan</span>'));
+        rows.push({miss, html: '<tr class="pending"><td>' + h1 + '–' + h2 + '</td><td>12</td><td>' + act + '</td><td>' + status + '</td></tr>'});
+      }
+      hxhBody.innerHTML = rows.map(r => r.html).join('');
+      const trs = [...hxhBody.children];
+      trs.forEach((tr, i) => setTimeout(() => { tr.classList.remove('pending'); tr.classList.add('pop'); }, 700 + i * 1300));
+      hxhStart = (hxhStart % 12) + 1;
+      setTimeout(hxhCycle, 700 + 5 * 1300 + 3600);
+    }
+    hxhCycle();
+
+    // --- standardized work: perform the job step by step against takt ---
+    const swSteps = [...document.querySelectorAll('#sw-body .sw-step')];
+    const swTimes = [1.5, 2.0, 3.5, 1.0], TAKT = 9.2;
+    const taktFill = document.getElementById('takt-fill'), swCycleEl = document.getElementById('sw-cycle');
+    function swCycle(){
+      let done = 0;
+      swSteps.forEach(s => s.classList.remove('active','done'));
+      taktFill.style.transition = 'none'; taktFill.style.width = '0%';
+      swCycleEl.textContent = 'Cycle: 0.0 min';
+      let delay = 500;
+      swSteps.forEach((s, i) => {
+        const dur = swTimes[i] * 900;  // 1 min ≈ 0.9s
+        setTimeout(() => {
+          swSteps.forEach(x => x.classList.remove('active'));
+          if (i > 0) swSteps[i-1].classList.add('done');
+          s.classList.add('active');
+          taktFill.style.transition = 'width ' + (dur/1000) + 's linear';
+          done += swTimes[i];
+          taktFill.style.width = (done / TAKT * 100) + '%';
+          swCycleEl.textContent = 'Cycle: ' + done.toFixed(1) + ' min';
+        }, delay);
+        delay += dur;
+      });
+      setTimeout(() => { swSteps.forEach(x => x.classList.remove('active')); swSteps[swSteps.length-1].classList.add('done'); }, delay);
+      setTimeout(swCycle, delay + 2800);
+    }
+    swCycle();
+
+    // --- tiered daily management: issue escalates up, gets resolved ---
+    const tiers = [...document.querySelectorAll('#tier-body .tier')];
+    const tierStatus = document.getElementById('tier-status');
+    const TIER_MSGS = ['Tier 1 · 7:00 — misses reviewed at the board','Tier 2 · 7:20 — blocker raised to supervisor','Tier 3 · 7:40 — cross-department conflict resolved','Tier 4 · 8:00 — resources committed'];
+    function tierCycle(){
+      tiers.forEach(t => t.classList.remove('active','done'));
+      tierStatus.textContent = 'Problems escalate in hours — not weeks';
+      tierStatus.style.color = '';
+      let d = 600;
+      tiers.forEach((t, i) => {
+        setTimeout(() => {
+          tiers.forEach(x => x.classList.remove('active'));
+          if (i > 0) tiers[i-1].classList.add('done');
+          t.classList.add('active');
+          tierStatus.textContent = TIER_MSGS[i];
+        }, d);
+        d += 1700;
+      });
+      setTimeout(() => {
+        tiers.forEach(x => { x.classList.remove('active'); x.classList.add('done'); });
+        tierStatus.textContent = '✓ Resolved same day — flow restored';
+      }, d);
+      setTimeout(tierCycle, d + 3200);
+    }
+    tierCycle();
   })();
 
   // scroll progress beam
