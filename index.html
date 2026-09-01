@@ -196,7 +196,8 @@
   /* ============ SHOWCASE ============ */
   .showcase{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 50%,var(--bg) 100%)}
   .gemba{position:relative;border-radius:24px;overflow:hidden;margin-bottom:26px;
-    border:1px solid var(--line-bright);box-shadow:0 40px 100px rgba(0,0,0,.5);container-type:inline-size}
+    border:1px solid var(--line-bright);box-shadow:0 40px 100px rgba(0,0,0,.5)}
+  .gemba-media{position:relative;container-type:inline-size}
   /* live chart overlaid on the photo's TV screen */
   .tv-chart{position:absolute;left:4.3%;top:22.8%;width:31.6%;height:27.2%;z-index:3;
     background:#122849;border:1px solid rgba(159,179,205,.25);border-radius:1cqw;
@@ -530,12 +531,14 @@
       <p>Not stock photos — the actual tools we build with your team: hour-by-hour boards, standardized work, and a daily management cadence that escalates problems in hours, not weeks.</p>
     </div>
     <div class="gemba reveal">
-      <img src="floor-dashboard.jpg" alt="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen" width="1600" height="1067" loading="lazy">
-      <div class="tv-chart" aria-hidden="true">
-        <span class="tvc-title">Scheduled vs. Actual — Today</span>
-        <div class="tv-bars" id="tv-bars"></div>
-        <div class="tv-labels" id="tv-labels"></div>
-        <span class="tv-miss"><i></i><span id="tv-miss-txt">9:00 miss — Reason: kitting short, Dept 2</span></span>
+      <div class="gemba-media">
+        <img src="floor-dashboard.jpg" alt="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen" width="1600" height="1067" loading="lazy">
+        <div class="tv-chart" aria-hidden="true">
+          <span class="tvc-title">Scheduled vs. Actual — Today</span>
+          <div class="tv-bars" id="tv-bars"></div>
+          <div class="tv-labels" id="tv-labels"></div>
+          <span class="tv-miss"><i></i><span id="tv-miss-txt">9:00 miss — Reason: kitting short, Dept 2</span></span>
+        </div>
       </div>
       <div class="gemba-cap">
         <span class="big"><b>Tier 1, 7:00 AM.</b> The numbers, live on the floor.</span>
