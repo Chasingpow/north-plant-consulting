@@ -266,6 +266,27 @@
   .check{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:rgba(141,198,63,.15);display:flex;align-items:center;justify-content:center;margin-top:2px}
   .check svg{width:12px;height:12px;stroke:var(--green);stroke-width:3}
 
+  /* ============ FOUNDER ============ */
+  .founder{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 60%,var(--bg) 100%)}
+  .founder-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
+  .founder-card{background:var(--surface);border:1px solid var(--line-bright);border-radius:20px;padding:40px 34px;text-align:center;position:relative}
+  .founder-card::before{content:"";position:absolute;inset:-1px;border-radius:20px;padding:1px;pointer-events:none;
+    background:linear-gradient(160deg,rgba(69,174,224,.5),transparent 35%,transparent 65%,rgba(141,198,63,.5));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .founder-avatar{width:120px;height:120px;border-radius:50%;margin:0 auto 22px;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 35% 30%,rgba(69,174,224,.25),rgba(141,198,63,.12));border:1px solid var(--line-bright)}
+  .founder-avatar img{width:76px;height:76px}
+  .founder-card h3{font-size:1.4rem;font-weight:800}
+  .founder-card .role{color:var(--green);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin:6px 0 24px}
+  .fstat{border-top:1px solid var(--line);padding:16px 0;text-align:left;display:flex;gap:14px;align-items:center}
+  .fstat b{font-family:var(--font-d);font-size:1.5rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;min-width:64px}
+  .fstat small{color:var(--muted);font-size:.86rem;line-height:1.4}
+  .founder-copy p{color:var(--muted);margin-bottom:18px;font-size:1.03rem}
+  .founder-copy p b{color:var(--text)}
+  .founder-quote{border-left:3px solid var(--green);background:var(--surface);border-radius:0 14px 14px 0;
+    padding:24px 28px;margin:28px 0 0;font-family:var(--font-d);font-size:1.12rem;font-weight:600;color:var(--text);line-height:1.55}
+  .founder-quote span{color:var(--green)}
+
   /* ============ PROCESS ============ */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative}
   .steps::before{content:"";position:absolute;top:27px;left:8%;right:8%;height:1px;
@@ -318,7 +339,7 @@
     .svc-grid,.vis-grid{grid-template-columns:repeat(2,1fr)}
     .steps{grid-template-columns:repeat(2,1fr);gap:40px 22px}
     .steps::before{display:none}
-    .about-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
+    .about-grid,.contact-grid,.founder-grid{grid-template-columns:1fr;gap:48px}
   }
   @media(max-width:680px){
     :root{
@@ -603,6 +624,26 @@
         <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Measurable results: on-time delivery, first-pass yield, productivity per labour hour</li>
         <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></span>Built to sustain — your supervisors and leads run it after we're gone</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<section class="founder" id="founder">
+  <div class="container founder-grid">
+    <div class="founder-card reveal">
+      <div class="founder-avatar"><img src="favicon.svg" alt=""></div>
+      <h3>Keith</h3>
+      <div class="role">Founder &amp; Principal Consultant</div>
+      <div class="fstat"><b>25</b><small>years in manufacturing — on the floor, not in the back office</small></div>
+      <div class="fstat"><b>15</b><small>years at Toyota Motor Manufacturing Canada, trained in the Toyota Way</small></div>
+      <div class="fstat"><b>TPS</b><small>standardized work, TWI job instruction, kaizen, visual management</small></div>
+    </div>
+    <div class="founder-copy reveal d1">
+      <span class="eyebrow">Meet the Founder</span>
+      <h2 style="font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:22px">Not like every other consultant <span class="grad" style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">on the market.</span></h2>
+      <p>Keith spent <b>25 years in manufacturing</b> — 15 of them at <b>Toyota Motor Manufacturing Canada</b>, where he learned the Toyota Way. It was there that he started looking at manufacturing completely differently: building workstations that work not just for the person who designed them, but for <b>anyone</b> who runs them. Hunting for ROI in its smallest and largest forms. Adding value in the right spots, and cutting waste out of the wrong ones. Mathematically sound KPIs — and an insistence that the data behind them is actually correct.</p>
+      <p>Those are the key functions of a well-oiled machine. But the floor teaches you there's more to it: <b>budgeting, scheduling, labour variances</b>, training that's up to date and controlled, and <b>systematically built SOPs and training manuals</b>. Time spent on the floor in every role gave Keith the habit of questioning everything — is this the right way, for this plant, for this purpose?</p>
+      <div class="founder-quote">"Finding changes is the easy part. <span>Making them is the hard part.</span> Communication, training, and collaboration are what build a cohesive mindset across a team — and that's what makes improvements stick."</div>
     </div>
   </div>
 </section>
