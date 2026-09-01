@@ -58,10 +58,10 @@
     background:rgba(8,17,32,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
     border-bottom:1px solid transparent}
   header.scrolled{background:rgba(8,17,32,.88);border-bottom-color:var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:92px;transition:.3s}
-  header.scrolled .nav{height:72px}
-  .logo-img{height:64px;width:auto;display:block;transition:.3s}
-  header.scrolled .logo-img{height:52px}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:116px;transition:.3s}
+  header.scrolled .nav{height:86px}
+  .logo-img{height:88px;width:auto;display:block;transition:.3s;filter:drop-shadow(0 0 18px rgba(69,174,224,.25))}
+  header.scrolled .logo-img{height:66px}
   nav ul{display:flex;gap:38px;list-style:none;align-items:center}
   nav a{color:#c4d2e3;font-size:.95rem;font-weight:600;letter-spacing:.01em;position:relative;padding:4px 0}
   nav a:not(.nav-cta)::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--grad);transition:.25s}
@@ -81,7 +81,11 @@
     border:1px solid rgba(141,198,63,.14);pointer-events:none}
   .hero::after{content:"";position:absolute;right:-160px;top:-160px;width:620px;height:620px;border-radius:50%;
     border:1px solid rgba(69,174,224,.12);pointer-events:none}
-  .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding:150px 0 100px;width:100%}
+  .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding:170px 0 110px;width:100%;position:relative;z-index:2}
+  #flow-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .watermark{position:absolute;right:-160px;bottom:-190px;width:680px;opacity:.055;pointer-events:none;z-index:0;animation:spin 120s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--grad);z-index:300;width:0;box-shadow:0 0 12px rgba(141,198,63,.6)}
   .eyebrow{display:inline-flex;align-items:center;gap:12px;color:var(--green);font-weight:700;font-size:.82rem;
     letter-spacing:.22em;text-transform:uppercase;margin-bottom:28px}
   .eyebrow::before{content:"";width:44px;height:2px;background:var(--grad)}
@@ -339,7 +343,11 @@
 </header>
 
 <main>
+<div class="progress" id="progress"></div>
+
 <section class="hero" id="top">
+  <canvas id="flow-canvas" aria-hidden="true"></canvas>
+  <img src="favicon.svg" alt="" class="watermark" aria-hidden="true">
   <div class="container hero-inner">
     <div>
       <span class="eyebrow">Manufacturing Operations Consulting</span>
@@ -632,6 +640,93 @@
       c.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
+
+  // scroll progress beam
+  const prog = document.getElementById('progress');
+  addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+  }, {passive:true});
+
+  // ===== Production Flow: orders stream through stations; a red one stalls, gets fixed, flows on =====
+  (function(){
+    const cv = document.getElementById('flow-canvas');
+    if (!cv || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = cv.getContext('2d');
+    let W, H, lanes, stations, parts;
+    const GREEN = '141,198,63', BLUE = '69,174,224', RED = '232,93,79', DPR = Math.min(devicePixelRatio || 1, 2);
+
+    function setup(){
+      W = cv.offsetWidth; H = cv.offsetHeight;
+      cv.width = W * DPR; cv.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      const n = 5;
+      lanes = Array.from({length:n}, (_,i) => H * (0.18 + 0.72 * i/(n-1)));
+      stations = [0.22, 0.44, 0.66, 0.86].map(f => f * W);
+      parts = [];
+      for (let i = 0; i < 26; i++) spawn(Math.random() * W);
+    }
+    function spawn(x){
+      parts.push({
+        x: x !== undefined ? x : -12,
+        lane: Math.floor(Math.random() * lanes.length),
+        v: 0.45 + Math.random() * 0.55,
+        r: 2 + Math.random() * 1.6,
+        state: 'ok',            // ok | stalled | fixed
+        timer: 0,
+        willStall: Math.random() < 0.16,
+        stallAt: stations[Math.floor(Math.random() * stations.length)]
+      });
+    }
+    let last = 0;
+    function frame(t){
+      const dt = Math.min(33, t - last) / 16.7; last = t;
+      ctx.clearRect(0, 0, W, H);
+      // lane lines
+      ctx.strokeStyle = 'rgba(255,255,255,.045)'; ctx.lineWidth = 1;
+      lanes.forEach(y => { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); });
+      // station ticks
+      stations.forEach(x => {
+        lanes.forEach(y => {
+          ctx.strokeStyle = 'rgba(255,255,255,.09)';
+          ctx.beginPath(); ctx.moveTo(x, y - 7); ctx.lineTo(x, y + 7); ctx.stroke();
+        });
+      });
+      for (let i = parts.length - 1; i >= 0; i--){
+        const p = parts[i], y = lanes[p.lane];
+        if (p.state === 'stalled'){
+          p.timer -= dt;
+          if (p.timer <= 0){ p.state = 'fixed'; p.willStall = false; }
+        } else {
+          p.x += p.v * dt * 1.6;
+          if (p.willStall && p.x >= p.stallAt){ p.state = 'stalled'; p.timer = 55 + Math.random() * 50; p.x = p.stallAt; }
+        }
+        if (p.x > W + 14){ parts.splice(i, 1); spawn(); continue; }
+        const col = p.state === 'stalled' ? RED : (p.state === 'fixed' ? GREEN : (Math.random() < 0.5 ? GREEN : BLUE));
+        const glow = p.state === 'stalled' ? 14 : 8;
+        const pulse = p.state === 'stalled' ? (0.55 + 0.45 * Math.sin(t / 110)) : 0.9;
+        // trail
+        const grad = ctx.createLinearGradient(p.x - 46, y, p.x, y);
+        grad.addColorStop(0, 'rgba(' + col + ',0)');
+        grad.addColorStop(1, 'rgba(' + col + ',' + 0.28 * pulse + ')');
+        ctx.strokeStyle = grad; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(p.x - 46, y); ctx.lineTo(p.x, y); ctx.stroke();
+        // dot
+        ctx.shadowColor = 'rgba(' + col + ',.9)'; ctx.shadowBlur = glow;
+        ctx.fillStyle = 'rgba(' + col + ',' + pulse + ')';
+        ctx.beginPath(); ctx.arc(p.x, y, p.r, 0, 7); ctx.fill();
+        ctx.shadowBlur = 0;
+        if (p.state === 'stalled'){
+          ctx.strokeStyle = 'rgba(' + RED + ',' + 0.5 * pulse + ')'; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(p.x, y, p.r + 5 + 3 * Math.sin(t / 140), 0, 7); ctx.stroke();
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    setup();
+    addEventListener('resize', setup);
+    requestAnimationFrame(frame);
+  })();
 </script>
 </body>
 </html>
