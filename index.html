@@ -884,6 +884,7 @@
     let W, H, lanes, stations, parts;
     const GREEN = '141,198,63', BLUE = '69,174,224', RED = '232,93,79', DPR = Math.min(devicePixelRatio || 1, 2);
 
+    let hbX, hbY;
     function setup(){
       W = cv.offsetWidth; H = cv.offsetHeight;
       cv.width = W * DPR; cv.height = H * DPR;
@@ -893,6 +894,20 @@
       stations = [0.22, 0.44, 0.66, 0.86].map(f => f * W);
       parts = [];
       for (let i = 0; i < 26; i++) spawn(Math.random() * W);
+      hbX = -TAIL; hbY = H * 0.895;
+    }
+    // EKG heartbeat waveform: flat baseline, P bump, sharp QRS spike, T bump
+    const PERIOD = 300, TAIL = 520;
+    function ekg(x){
+      const p = ((x % PERIOD) + PERIOD) % PERIOD / PERIOD;
+      let y = 0;
+      const bump = (c, w, a) => a * Math.exp(-Math.pow((p - c) / w, 2));
+      y += bump(0.58, 0.025, 5);          // P wave
+      y += bump(0.665, 0.012, -7);        // Q dip
+      y += bump(0.69, 0.014, 34);         // R spike
+      y += bump(0.715, 0.013, -12);       // S dip
+      y += bump(0.80, 0.035, 9);          // T wave
+      return -y;
     }
     function spawn(x){
       parts.push({
@@ -920,6 +935,26 @@
           ctx.beginPath(); ctx.moveTo(x, y - 7); ctx.lineTo(x, y + 7); ctx.stroke();
         });
       });
+      // heartbeat sweep — full width, comet tail
+      hbX += 3.1 * dt;
+      if (hbX > W + TAIL) hbX = -TAIL;
+      ctx.lineWidth = 2;
+      ctx.lineJoin = 'round';
+      const STEP = 6;
+      for (let x = Math.max(0, hbX - TAIL); x < Math.min(W, hbX); x += STEP){
+        const a = Math.max(0, 1 - (hbX - x) / TAIL) * 0.85;
+        ctx.strokeStyle = 'rgba(141,198,63,' + a + ')';
+        ctx.beginPath();
+        ctx.moveTo(x, hbY + ekg(x));
+        ctx.lineTo(Math.min(x + STEP, W, hbX), hbY + ekg(Math.min(x + STEP, W, hbX)));
+        ctx.stroke();
+      }
+      if (hbX > 0 && hbX < W){
+        ctx.shadowColor = 'rgba(141,198,63,1)'; ctx.shadowBlur = 16;
+        ctx.fillStyle = '#b6e37a';
+        ctx.beginPath(); ctx.arc(hbX, hbY + ekg(hbX), 3.2, 0, 7); ctx.fill();
+        ctx.shadowBlur = 0;
+      }
       for (let i = parts.length - 1; i >= 0; i--){
         const p = parts[i], y = lanes[p.lane];
         if (p.state === 'stalled'){
