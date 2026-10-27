@@ -414,6 +414,7 @@
         <li><a href="#showcase">The System</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#process">How We Work</a></li>
+        <li><a href="#better">Free Day</a></li>
         <li><a class="nav-cta" href="#contact">Get in Touch</a></li>
       </ul>
     </nav>
@@ -663,6 +664,116 @@
     </div>
   </div>
 </section>
+
+<!-- ============ BUILDING BETTER TOGETHER ============
+     Paste this whole block into index.html directly ABOVE <section class="contact" id="contact">.
+     Put building-better-together.mp4 and building-better-together-poster.jpg in the same folder as index.html.
+     Optional nav link: <li><a href="#better">Free Day</a></li> -->
+<style>
+  #better{background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 100%)}
+  .bbt-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:start}
+  .bbt-video{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line-bright);background:#000;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,.7);aspect-ratio:16/9}
+  .bbt-video video{display:block;width:100%;height:100%;object-fit:cover}
+  .bbt-rules{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:12px}
+  .bbt-rules li{display:flex;gap:14px;align-items:flex-start;color:#d5e0ec;font-weight:500;font-size:1rem;line-height:1.5}
+  .bbt-rules li::before{content:"→";color:var(--green);font-weight:800;flex:0 0 auto}
+  .bbt-dates{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px}
+  .bbt-date{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .bbt-date small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .bbt-date b{display:block;font-family:var(--font-d);font-size:1.45rem;font-weight:800;margin-top:4px;color:var(--text)}
+  .bbt-fine{color:var(--muted);font-size:.9rem;margin-top:18px;line-height:1.6}
+  #bbt-form .row{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+  #bbt-form select{width:100%;border:1px solid var(--line-bright);border-radius:10px;padding:14px 16px;font:inherit;font-size:.96rem;
+    background:rgba(255,255,255,.04);color:#fff;appearance:none;-webkit-appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,#a6b6ca 50%),linear-gradient(135deg,#a6b6ca 50%,transparent 50%);
+    background-position:calc(100% - 20px) 52%,calc(100% - 14px) 52%;background-size:6px 6px;background-repeat:no-repeat}
+  #bbt-form select:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(141,198,63,.12)}
+  #bbt-form select option{background:#0b1830;color:#fff}
+  .bbt-check{display:flex;gap:12px;align-items:flex-start;margin:4px 0 14px;color:#c4d2e3;font-size:.9rem;line-height:1.5;cursor:pointer}
+  .bbt-check input{width:18px;height:18px;margin-top:2px;accent-color:var(--green);flex:0 0 auto}
+  .bbt-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+  .bbt-closed{display:none;background:var(--surface-2);border:1px solid var(--line-bright);border-radius:12px;padding:16px;color:#d5e0ec;margin-bottom:18px;font-size:.95rem}
+  #bbt-form.closed .bbt-closed{display:block}
+  #bbt-form.closed .field,#bbt-form.closed .row,#bbt-form.closed .bbt-check,#bbt-form.closed button{opacity:.4;pointer-events:none}
+  @media(max-width:1020px){.bbt-grid{grid-template-columns:1fr;gap:48px}}
+  @media(max-width:680px){#bbt-form .row{grid-template-columns:1fr}.bbt-dates{grid-template-columns:1fr 1fr}}
+</style>
+
+<section id="better">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Building Better Together</span>
+      <h2>One free day on your floor. <span class="grad">For one BC business.</span></h2>
+      <p>Every six months we give a full day, free, to a BC company that's fighting its own data. We map the flow, find where money leaks, and show what live KPIs would look like for your team. First round: December, so you start 2027 with clear numbers.</p>
+    </div>
+
+    <div class="bbt-grid">
+      <div class="reveal">
+        <div class="bbt-video">
+          <video src="building-better-together.mp4" poster="building-better-together-poster.jpg" controls playsinline preload="metadata"></video>
+        </div>
+        <ul class="bbt-rules">
+          <li>BC company with an operating site in BC</li>
+          <li>Struggling with data, KPIs, or knowing where money is lost</li>
+          <li>An owner or senior leader on site for the full day</li>
+          <li>Open to us sharing the anonymized results afterward</li>
+        </ul>
+        <div class="bbt-dates">
+          <div class="bbt-date"><small>Apply by</small><b>Nov 15</b></div>
+          <div class="bbt-date"><small>Your day</small><b>December</b></div>
+        </div>
+        <p class="bbt-fine">No cost in the Lower Mainland and Fraser Valley. If a flight or overnight stay is needed, the company covers travel and lodging at cost. We pick one company per round and reply to every applicant.</p>
+      </div>
+
+      <form id="bbt-form" class="reveal d1" action="https://formspree.io/f/maeyeqno" method="POST">
+        <h3>Apply for the free day</h3>
+        <div class="bbt-closed">Applications for this round are closed. The next round opens in spring. Use the contact form below to get on the list.</div>
+        <input type="hidden" name="_subject" value="Building Better Together application">
+        <input type="hidden" name="form" value="Building Better Together · Winter 2026 round">
+        <div class="bbt-hp" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+        <div class="row">
+          <div class="field"><label for="bbt-name">Your name</label><input id="bbt-name" name="name" type="text" required autocomplete="name" placeholder="Full name"></div>
+          <div class="field"><label for="bbt-role">Your role</label><input id="bbt-role" name="role" type="text" required placeholder="e.g. Owner, GM"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bbt-email">Email</label><input id="bbt-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com"></div>
+          <div class="field"><label for="bbt-phone">Phone (optional)</label><input id="bbt-phone" name="phone" type="tel" autocomplete="tel" placeholder="604 555 0100"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bbt-company">Company</label><input id="bbt-company" name="company" type="text" required autocomplete="organization" placeholder="Company name"></div>
+          <div class="field"><label for="bbt-city">BC site location</label><input id="bbt-city" name="bc_location" type="text" required placeholder="e.g. Surrey, Kelowna"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="bbt-size">People on site</label>
+            <select id="bbt-size" name="team_size" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>Under 20</option><option>20–50</option><option>50–150</option><option>150–500</option><option>500+</option>
+            </select></div>
+          <div class="field"><label for="bbt-type">What you do</label>
+            <select id="bbt-type" name="business_type" required>
+              <option value="" disabled selected>Choose one</option>
+              <option>Manufacturing</option><option>Food &amp; beverage</option><option>Warehouse / distribution</option><option>Retail</option><option>Other</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="bbt-pain">Where does your data let you down?</label>
+          <textarea id="bbt-pain" name="data_problem" rows="4" required placeholder="What do you wish you could see, trust, or measure today?"></textarea></div>
+        <label class="bbt-check"><input type="checkbox" name="leader_on_site" value="Yes" required><span>An owner or senior leader can be on site with us for the full day.</span></label>
+        <label class="bbt-check"><input type="checkbox" name="ok_to_share_anonymized" value="Yes" required><span>We're OK with North Plant sharing anonymized results. No company or employee names.</span></label>
+        <button type="submit">Send application</button>
+        <p class="form-note">Applications close November 15, 2026. Goes straight to keith.h@northplantconsulting.com.</p>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  // Close the form automatically after the deadline (11:59 pm Pacific, Nov 15, 2026)
+  (function(){
+    var f=document.getElementById('bbt-form'); if(!f) return;
+    if(Date.now() > Date.parse('2026-11-16T07:59:59Z')) f.classList.add('closed');
+  })();
+</script>
+<!-- ============ /BUILDING BETTER TOGETHER ============ -->
 
 <section class="contact" id="contact">
   <div class="container contact-grid">
