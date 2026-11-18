@@ -266,6 +266,8 @@
   .shot-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#0f1d33;border-bottom:1px solid var(--line)}
   .shot-bar i{width:9px;height:9px;border-radius:50%;background:#2a3a55}
   .shot-bar span{margin-left:8px;font-size:.74rem;color:var(--muted);letter-spacing:.04em}
+  .vidshot{cursor:default}.vidshot:hover{transform:none}.vidshot video{display:block;width:100%;height:auto;background:#0d1a2e}
+  .vdots{margin-left:auto;display:flex;gap:6px}.vdots b{width:7px;height:7px;border-radius:50%;background:#2a3a55;transition:.3s}.vdots b.on{background:var(--green)}
   .shot-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .build-tag{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-2);margin-bottom:12px}
   .build h3{font-size:clamp(1.45rem,2.4vw,1.9rem);font-weight:800;letter-spacing:-.015em;line-height:1.2;margin-bottom:14px}
@@ -670,11 +672,11 @@
     <div class="builds">
 
       <div class="build reveal">
-        <div class="build-media"><button type="button" class="shot" data-full="work-vsm.jpg" aria-label="Enlarge: Live value stream map showing pick and cut, pre-module sub-stations, 18 assembly lines, QC and pack, with the current constraint highlighted"><div class="shot-bar"><i></i><i></i><i></i><span>Live Flow · value stream board</span></div><img src="work-vsm.jpg" alt="Live value stream map showing pick and cut, pre-module sub-stations, 18 assembly lines, QC and pack, with the current constraint highlighted" width="1800" height="1125" loading="lazy"></button></div>
+        <div class="build-media"><div class="shot vidshot"><div class="shot-bar"><i></i><i></i><i></i><span id="lbLabel">Apparel plant · live value stream map</span><span class="vdots"><b class="on"></b><b></b><b></b></span></div><video id="liveVid" src="live-boards.mp4" poster="live-boards-poster.jpg" autoplay muted loop playsinline preload="metadata" width="1440" height="900" aria-label="Live boards cycling through an apparel plant value stream map, a molded pulp plant flow map and a windows and doors SQDIP board"></video></div></div>
         <div>
-          <span class="build-tag">Live value stream map</span>
-          <h3>The whole plant on one screen, updated by every bin scan.</h3>
-          <p class="lead">We mapped a sewn-products plant from picking to pack, then put the map on the floor. Every bin carries a QR card, so WIP, queues, starved lines and the constraint move in real time. Nobody types a status.</p>
+          <span class="build-tag">Live value stream maps</span>
+          <h3>The whole plant on one screen, updated as the work moves.</h3>
+          <p class="lead">Three plants, three live boards: an apparel plant mapped from picking to pack, a molded pulp plant from pulper to truck, and a windows and doors line on a live SQDIP board. Scans and floor inputs move WIP, queues, starved lines and the constraint in real time. Nobody types a status.</p>
           <div class="howto-label">How to use it properly</div>
           <ol class="howto">
             <li><span><b>Start at the red box.</b> The constraint tile tells you where the plant is losing output right now. Fix that first, not the loudest problem.</span></li>
@@ -1228,6 +1230,8 @@
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "388180ffcf764093bd98b48d20613182"}'></script><!-- End Cloudflare Web Analytics -->
 <script>
+(function(){var v=document.getElementById('liveVid');if(!v)return;var L=['Apparel plant · live value stream map','Molded pulp plant · live flow map','Windows & doors · live SQDIP board'],lab=document.getElementById('lbLabel'),d=document.querySelectorAll('.vdots b'),cur=0;
+v.addEventListener('timeupdate',function(){var k=v.currentTime<7.6?0:v.currentTime<15.2?1:2;if(k!==cur){cur=k;lab.textContent=L[k];d.forEach(function(b,i){b.classList.toggle('on',i===k)})}});})();
 (function(){var lb=document.getElementById('lb');if(!lb)return;var im=lb.querySelector('img');
 document.querySelectorAll('.shot').forEach(function(b){b.addEventListener('click',function(){im.src=b.dataset.full;im.alt=b.querySelector('img').alt;lb.classList.add('on')})});
 lb.addEventListener('click',function(){lb.classList.remove('on')});document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});})();
