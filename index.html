@@ -251,6 +251,39 @@
   .t3{width:36%;background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#fff}
   .t4{width:27%;background:#173A63;color:#fff}
   .tier-arrow{text-align:center;color:var(--green);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin:6px 0 10px;transition:.3s}
+
+  /* ============ RECENT BUILDS ============ */
+  #builds{scroll-margin-top:80px}
+  .builds{display:flex;flex-direction:column;gap:96px}
+  .build{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:center}
+  .build.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+  .build.flip .build-media{order:2}
+  .build-media{position:relative;display:flex;flex-direction:column;gap:14px}
+  .shot{display:block;padding:0;border:1px solid var(--line-bright);border-radius:14px;overflow:hidden;background:#0d1a2e;cursor:zoom-in;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(69,174,224,.08);transition:transform .35s,box-shadow .35s}
+  .shot:hover{transform:translateY(-4px);box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(141,198,63,.35)}
+  .shot img{display:block;width:100%;height:auto}
+  .shot-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#0f1d33;border-bottom:1px solid var(--line)}
+  .shot-bar i{width:9px;height:9px;border-radius:50%;background:#2a3a55}
+  .shot-bar span{margin-left:8px;font-size:.74rem;color:var(--muted);letter-spacing:.04em}
+  .shot-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .build-tag{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-2);margin-bottom:12px}
+  .build h3{font-size:clamp(1.45rem,2.4vw,1.9rem);font-weight:800;letter-spacing:-.015em;line-height:1.2;margin-bottom:14px}
+  .build p.lead{color:var(--muted);margin-bottom:22px}
+  .howto{list-style:none;counter-reset:h;display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+  .howto li{counter-increment:h;display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;font-size:.95rem;color:#d3deeb}
+  .howto li::before{content:counter(h);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-d);font-weight:700;font-size:.82rem;color:#06121f;background:var(--grad)}
+  .howto b{color:var(--text)}
+  .howto-label{font-family:var(--font-d);font-weight:700;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+  .build-note{font-size:.8rem;color:var(--muted);border-left:2px solid var(--green);padding-left:12px}
+  .builds-foot{margin-top:72px;text-align:center;color:var(--muted);font-size:.92rem}
+  .lb{position:fixed;inset:0;z-index:300;background:rgba(4,9,18,.92);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .lb button{position:absolute;top:18px;right:22px;background:rgba(255,255,255,.1);border:1px solid var(--line-bright);color:#fff;width:42px;height:42px;border-radius:50%;font-size:1.3rem;cursor:pointer}
+  @media(max-width:960px){.build,.build.flip{grid-template-columns:1fr;gap:28px}.build.flip .build-media{order:0}.builds{gap:72px}}
+  @media(max-width:560px){.shot-pair{grid-template-columns:1fr}}
+
   /* live showcase animations */
   #hxh-body tr{transition:opacity .5s,transform .5s}
   #hxh-body tr.pending{opacity:.18}
@@ -431,6 +464,7 @@
       <ul id="navlinks">
         <li><a href="#services">Services</a></li>
         <li><a href="#showcase">The System</a></li>
+        <li><a href="#builds">Builds</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#process">How We Work</a></li>
         <li><a href="#better">Free Day</a></li>
@@ -624,6 +658,61 @@
       </div>
     </div>
   </div>
+</section>
+
+<section id="builds">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Recent Builds</span>
+      <h2>Tools we've built for plants <span class="grad">this season.</span></h2>
+      <p>Each one started as a whiteboard problem on a client's floor. Shown here with demo data and every company, product and person name removed.</p>
+    </div>
+    <div class="builds">
+
+      <div class="build reveal">
+        <div class="build-media"><button type="button" class="shot" data-full="work-vsm.jpg" aria-label="Enlarge: Live value stream map showing pick and cut, pre-module sub-stations, 18 assembly lines, QC and pack, with the current constraint highlighted"><div class="shot-bar"><i></i><i></i><i></i><span>Live Flow · value stream board</span></div><img src="work-vsm.jpg" alt="Live value stream map showing pick and cut, pre-module sub-stations, 18 assembly lines, QC and pack, with the current constraint highlighted" width="1800" height="1125" loading="lazy"></button></div>
+        <div>
+          <span class="build-tag">Live value stream map</span>
+          <h3>The whole plant on one screen, updated by every bin scan.</h3>
+          <p class="lead">We mapped a sewn-products plant from picking to pack, then put the map on the floor. Every bin carries a QR card, so WIP, queues, starved lines and the constraint move in real time. Nobody types a status.</p>
+          <div class="howto-label">How to use it properly</div>
+          <ol class="howto">
+            <li><span><b>Start at the red box.</b> The constraint tile tells you where the plant is losing output right now. Fix that first, not the loudest problem.</span></li>
+            <li><span><b>Read queues, not people.</b> Bins piling up before a station means the problem is upstream supply or that station's capacity. Bins missing after it means it's starved.</span></li>
+            <li><span><b>Scan every move, every time.</b> The board is only as true as the scans. A skipped scan shows up as phantom WIP within the hour.</span></li>
+            <li><span><b>Run the morning tier meeting from it.</b> Review yesterday's pack vs plan, open kaizen cards and response times, then assign owners before 7:30.</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="build flip reveal">
+        <div class="build-media">
+          <button type="button" class="shot" data-full="work-capex-financial.jpg" aria-label="Enlarge: CAPAX capital proposal builder showing NPV, IRR, payback, a cash flow chart and a sensitivity grid"><div class="shot-bar"><i></i><i></i><i></i><span>CAPAX · financial case</span></div><img src="work-capex-financial.jpg" alt="CAPAX capital proposal builder showing NPV, IRR, payback, a cash flow chart and a sensitivity grid" width="1800" height="1125" loading="lazy"></button>
+          <div class="shot-pair">
+            <button type="button" class="shot" data-full="work-capex-summary.jpg" aria-label="Enlarge: CAPAX one-page approval summary with readiness checklist"><div class="shot-bar"><i></i><i></i><i></i><span>CAPAX · approval summary</span></div><img src="work-capex-summary.jpg" alt="CAPAX one-page approval summary with readiness checklist" width="1800" height="1125" loading="lazy"></button>
+            <button type="button" class="shot" data-full="work-forecast.jpg" aria-label="Enlarge: Forecast Studio showing a Holt-Winters demand forecast with an 80 percent range"><div class="shot-bar"><i></i><i></i><i></i><span>Forecast Studio</span></div><img src="work-forecast.jpg" alt="Forecast Studio showing a Holt-Winters demand forecast with an 80 percent range" width="1800" height="1125" loading="lazy"></button>
+          </div>
+        </div>
+        <div>
+          <span class="build-tag">Capital program + forecasting</span>
+          <h3>Capital requests that finance can approve the first time.</h3>
+          <p class="lead"><b>CAPAX</b> walks a plant team through a full capital case: baseline, options, every cost to go-live, savings with owners, NPV, IRR, payback and a 70% stress test, ending in a one-page summary for the CFO. <b>Forecast Studio</b> builds the demand behind it, measures past forecast bias, and turns the plan into capacity and headcount.</p>
+          <div class="howto-label">How to use it properly</div>
+          <ol class="howto">
+            <li><span><b>Lead with the problem in numbers.</b> "Line 3 is our constraint at 212K units vs 230K demand" gets approved. "We need a robot" doesn't.</span></li>
+            <li><span><b>Put "do nothing" and a lean fix beside your proposal.</b> Finance trusts a case that shows what you tried before asking for capital.</span></li>
+            <li><span><b>Correct the forecast for bias before you build capacity on it.</b> Load past forecasts against actuals; if the tracking signal is outside ±4, fix the forecast first.</span></li>
+            <li><span><b>Only count labour you actually remove,</b> then clear every readiness check and commit to a post-audit date 6–12 months after go-live.</span></li>
+          </ol>
+          <p class="build-note">Includes a spoken walkthrough in eight languages for floor and office teams.</p>
+        </div>
+      </div>
+
+<!-- OBEYA-SLOT -->
+    </div>
+    <p class="builds-foot">Want one of these built around your plant? <a href="#contact">Get in touch</a> or apply for a <a href="#better">free day</a>.</p>
+  </div>
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged screenshot"><button type="button" aria-label="Close">×</button><img alt=""></div>
 </section>
 
 <section id="about">
@@ -1138,5 +1227,10 @@
   })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "388180ffcf764093bd98b48d20613182"}'></script><!-- End Cloudflare Web Analytics -->
+<script>
+(function(){var lb=document.getElementById('lb');if(!lb)return;var im=lb.querySelector('img');
+document.querySelectorAll('.shot').forEach(function(b){b.addEventListener('click',function(){im.src=b.dataset.full;im.alt=b.querySelector('img').alt;lb.classList.add('on')})});
+lb.addEventListener('click',function(){lb.classList.remove('on')});document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});})();
+</script>
 </body>
 </html>
