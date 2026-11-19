@@ -577,6 +577,71 @@
   }
 </style>
 
+
+<style id="redesign-2">
+  /* ===== hero v2 ===== */
+  .hero{background:radial-gradient(1200px 600px at 85% 20%,rgba(69,174,224,.10),transparent 60%),linear-gradient(180deg,#0B1626 0%,#0D1B2E 100%);border-bottom:1px solid rgba(255,255,255,.06)}
+  .hero::before,.hero::after{display:none!important}
+  .hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:64px;align-items:center;padding:132px 0 88px}
+  .hero h1{font-size:clamp(2.6rem,5vw,4.4rem);line-height:1.02;color:#F4F7FB;margin:18px 0 22px}
+  .hero h1 .hl{color:var(--green);display:block}
+  .hero .lead{font-size:1.12rem;line-height:1.65;color:#B4C2D3;max-width:520px;margin-bottom:30px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .btn-primary{background:var(--green)!important;color:#08131F;box-shadow:none}
+  .hero .btn-primary:hover{filter:brightness(1.06);transform:translateY(-1px)}
+  .hero .btn-ghost{background:transparent;border:1.5px solid rgba(255,255,255,.22);color:#EEF3F9}
+  .hero .btn-ghost:hover{border-color:#fff}
+  .hero-built{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);max-width:540px}
+  .hb-label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+  .hero-built ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+  .hero-built li a{display:flex;align-items:center;gap:10px;color:#D6E0EC;font-size:.95rem;font-weight:600;transition:color .2s}
+  .hero-built li a::before{content:"";flex:0 0 8px;height:8px;border-radius:2px;background:var(--green)}
+  .hero-built li a:hover{color:#fff}
+  .hero-visual{perspective:1600px}
+  .hv-frame{border-radius:14px;overflow:hidden;background:#0F1D33;border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 50px 100px -40px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.3);transform:rotateY(-7deg) rotateX(3deg);transform-origin:left center;transition:transform .6s ease}
+  .hv-frame:hover{transform:rotateY(0) rotateX(0)}
+  .hv-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;background:#0F1D33;border-bottom:1px solid rgba(255,255,255,.07)}
+  .hv-bar i{width:9px;height:9px;border-radius:50%;background:#2A3A55}
+  .hv-bar span{margin-left:8px;font-size:.76rem;color:#8EA2BA;letter-spacing:.03em}
+  .hv-live{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.68rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+  .hv-live em{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
+  .hv-frame video{display:block;width:100%;height:auto}
+  .hv-note{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:.82rem;color:#8EA2BA;padding-left:4px}
+  .hv-dot{width:6px;height:6px;border-radius:50%;background:var(--amber)}
+  .band{background:#0D1B2E}
+  /* ===== services on light ===== */
+  .svc-light .sec-head p{color:var(--ink-muted)}
+  .svc-light .card{background:#fff;border:1px solid rgba(13,27,46,.10);box-shadow:0 14px 34px -26px rgba(13,27,46,.35);color:var(--ink)}
+  .svc-light .card::before,.svc-light .card::after{display:none}
+  .svc-light .card:hover{transform:translateY(-4px);box-shadow:0 24px 44px -26px rgba(13,27,46,.45);border-color:rgba(13,27,46,.18)}
+  .svc-light .card h3{color:var(--ink);font-family:'Sora',system-ui,sans-serif;font-weight:700;letter-spacing:-.01em;font-size:1.12rem;line-height:1.35}
+  .svc-light .card p{color:#4C5A6D}
+  .svc-light .card .icon{background:#F3F0E8;border:1px solid rgba(13,27,46,.08)}
+  .svc-light .card .icon svg{stroke:#1F6FA8}
+  .svc-light .card .num{font-family:var(--font-h);color:var(--amber);opacity:1;font-size:1.05rem}
+  .svc-light .card.feature{background:var(--ink);border-color:var(--ink);color:#EEF3F9;grid-template-columns:auto 1fr auto;align-items:center}
+  .svc-light .card.feature h3{color:#fff;font-family:var(--font-h);font-weight:400;font-size:1.6rem}
+  .svc-light .card.feature p{color:#B9C7D8}
+  .svc-light .card.feature .icon{background:rgba(242,169,59,.14);border-color:rgba(242,169,59,.4)}
+  .svc-light .card.feature::after{display:block!important;color:var(--amber-2)}
+  .svc-light .card.feature .num{display:none}
+  .feat-cta{grid-column:3;grid-row:1/4;align-self:center;white-space:nowrap;background:var(--green);color:#08131F;font-weight:700;font-size:.95rem;padding:13px 20px;border-radius:10px;transition:filter .2s}
+  .feat-cta:hover{filter:brightness(1.08)}
+  .svc-light .marquee span,.svc-light .chip{background:#fff;border-color:rgba(13,27,46,.12);color:#2B3A4E}
+  @media(max-width:1020px){
+    .hero-inner{grid-template-columns:1fr;gap:44px;padding:120px 0 64px}
+    .hv-frame{transform:none}
+    .svc-light .card.feature{grid-template-columns:auto 1fr}
+    .feat-cta{grid-column:1/-1;grid-row:auto;justify-self:start;margin-top:14px;order:9}
+  }
+  @media(max-width:680px){
+    .hero-inner{padding:104px 20px 52px}
+    .hero-built ul{grid-template-columns:1fr}
+    .svc-light .card.feature{grid-template-columns:1fr}
+    .svc-light .card:not(.feature) .num::after{color:#8792A2}
+  }
+</style>
 </head>
 <body>
 <div class="grid-bg" aria-hidden="true"></div>
@@ -604,40 +669,33 @@
 <div class="progress" id="progress"></div>
 
 <section class="hero" id="top">
-  <canvas id="flow-canvas" aria-hidden="true"></canvas>
-  <img src="favicon.svg" alt="" class="watermark" aria-hidden="true">
   <div class="container hero-inner">
-    <div>
+    <div class="hero-copy">
       <span class="eyebrow">Manufacturing Operations Consulting</span>
-      <h1>Plants run better <span class="grad">when the system does.</span></h1>
-      <p class="lead">North Plant Consulting brings Toyota Production System discipline to manufacturing plants — production control, standardized work, daily management, and the visual systems that make on-time delivery hold.</p>
-      <a class="btn btn-primary" href="#contact">Request a Consultation
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <a class="btn btn-ghost" href="#services">Explore Services</a>
-      <div class="method-strip">
-        <span>Toyota Production System</span>
-        <span>TWI Job Instruction</span>
-        <span>Visual Management</span>
-        <span>Kaizen</span>
+      <h1>Plants run better <span class="hl">when the system does.</span></h1>
+      <p class="lead">We build the systems that make on-time delivery hold: production control, standardized work, daily management, and live boards your whole floor can see and act on.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#contact">Request a Consultation
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#builds">See Our Builds</a>
+      </div>
+      <div class="hero-built">
+        <span class="hb-label">Recently built</span>
+        <ul>
+          <li><a href="#builds">Live value stream maps</a></li>
+          <li><a href="#builds">Capital proposal builder</a></li>
+          <li><a href="#builds">Demand forecasting</a></li>
+          <li><a href="#builds">Obeya room plans</a></li>
+        </ul>
       </div>
     </div>
-    <div class="dash-wrap">
-      <div class="dash" aria-hidden="true">
-        <div class="dash-head"><span>Plant Daily Dashboard</span><span style="display:flex;align-items:center;gap:14px"><span class="clock" id="dash-clock">00:00:00</span><span class="live"><span class="live-dot"></span>Live</span></span></div>
-        <div class="kpi-row">
-          <div class="kpi"><small>On-Time Delivery</small><b id="k-otd">94.2%</b> <span class="up" id="k-otd-d">▲ 6.8</span><canvas id="spark" width="200" height="26" style="display:block;width:100%;height:26px;margin-top:8px"></canvas></div>
-          <div class="kpi"><small>First-Pass Yield</small><b id="k-fpy">98.1%</b> <span class="up" id="k-fpy-d">▲ 1.4</span></div>
-          <div class="kpi"><small>Orders Held</small><b id="k-held">7</b> <span class="down" id="k-held-d">▼ 12</span></div>
-        </div>
-        <div class="dash-chart">
-          <small>Scheduled vs. Actual — Today</small>
-          <div class="bars" id="bars"></div>
-          <div class="bar-labels" id="bar-labels"></div>
-          <span class="miss-tag" id="miss-tag" style="visibility:hidden"><span class="miss-dot"></span><span id="miss-txt"></span></span>
-          <div class="feed"><span class="feed-dot" id="feed-dot"></span><span id="feed-txt">Shift 1 started — all cells manned</span></div>
-        </div>
+    <div class="hero-visual">
+      <div class="hv-frame">
+        <div class="hv-bar"><i></i><i></i><i></i><span id="hvLabel">Apparel plant · live value stream map</span><b class="hv-live"><em></em>Live</b></div>
+        <video id="heroVid" src="live-boards.mp4" poster="live-boards-poster.jpg" autoplay muted loop playsinline preload="auto" width="1440" height="900" aria-label="Live boards from three client plants: an apparel value stream map, a molded pulp flow map and a windows and doors SQDIP board"></video>
       </div>
+      <div class="hv-note"><span class="hv-dot"></span>Real client builds, shown with demo data and names removed</div>
     </div>
   </div>
 </section>
@@ -650,7 +708,7 @@
   </div>
 </div>
 
-<section id="services">
+<section id="services" class="light svc-light">
   <div class="container">
     <div class="sec-head reveal">
       <span class="eyebrow">What We Do</span>
@@ -658,7 +716,7 @@
       <p>Hands-on operations consulting for manufacturers — grounded in the Toyota Production System and focused on measurable improvement, not binders on a shelf.</p>
     </div>
     <div class="svc-grid">
-      <div class="card feature reveal">
+      <div class="card feature reveal"><a class="feat-cta" href="#process">See engagements →</a>
         <span class="num">01</span>
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6M11 8v6"/></svg></div>
         <h3>Operational Assessment</h3>
@@ -1267,6 +1325,7 @@
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "388180ffcf764093bd98b48d20613182"}'></script><!-- End Cloudflare Web Analytics -->
 <script>
+(function(){var v=document.getElementById('heroVid');if(!v)return;var L=['Apparel plant · live value stream map','Molded pulp plant · live flow map','Windows & doors · live SQDIP board'],lab=document.getElementById('hvLabel'),cur=0;v.addEventListener('timeupdate',function(){var k=v.currentTime<7.6?0:v.currentTime<15.2?1:2;if(k!==cur){cur=k;lab.textContent=L[k]}});})();
 (function(){var v=document.getElementById('liveVid');if(!v)return;var L=['Apparel plant · live value stream map','Molded pulp plant · live flow map','Windows & doors · live SQDIP board'],lab=document.getElementById('lbLabel'),d=document.querySelectorAll('.vdots b'),cur=0;
 v.addEventListener('timeupdate',function(){var k=v.currentTime<7.6?0:v.currentTime<15.2?1:2;if(k!==cur){cur=k;lab.textContent=L[k];d.forEach(function(b,i){b.classList.toggle('on',i===k)})}});})();
 (function(){var lb=document.getElementById('lb');if(!lb)return;var im=lb.querySelector('img');
