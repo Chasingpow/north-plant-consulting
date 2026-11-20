@@ -525,6 +525,11 @@
   .eng-cta:hover{background:var(--ink);color:#fff}
   .eng.hi .eng-cta{background:var(--green);border-color:var(--green);color:#06121f}
   .eng.hi .eng-cta:hover{filter:brightness(1.08)}
+  .eng-wide{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:center;padding:30px}
+  .eng-media{border-radius:14px;overflow:hidden;background:#06101d;border:1px solid rgba(13,27,46,.12);box-shadow:0 24px 50px -30px rgba(13,27,46,.55)}
+  .eng-media video{display:block;width:100%;height:auto}
+  .eng-body{display:flex;flex-direction:column}
+  .eng li b{color:var(--ink);font-weight:700}
   /* contact on light */
   .contact.light .contact-grid > div > p{color:var(--ink-muted)}
   .contact.light .contact-line{color:var(--ink)}
@@ -550,6 +555,7 @@
   .foot-right{line-height:1.8}
   @media(max-width:1020px){
     .eng-grid{grid-template-columns:1fr;max-width:620px;margin:0 auto}
+    .eng-wide{grid-template-columns:1fr;gap:26px;padding:22px 22px 30px}
     .build,.build.flip{grid-template-columns:1fr}
     .build .build-tag,.build h3,.build p.lead,.build .build-note,.build .howto-label,.build .howto{grid-column:1;grid-row:auto}
     .build .howto-label{margin-top:12px}
@@ -939,7 +945,7 @@
   <div class="container">
     <div class="sec-head center reveal">
       <span class="eyebrow">Engagements</span>
-      <h2>Three ways to work <span class="grad">with us.</span></h2>
+      <h2>Four ways to work <span class="grad">with us.</span></h2>
       <p>Every engagement starts with a no-cost intro call. Fixed scope, fixed fee, and results you can see in your numbers.</p>
     </div>
     <div class="eng-grid">
@@ -968,6 +974,18 @@
         <p>Senior operations leadership without a full-time hire. We run the improvement system and develop your leaders.</p>
         <ul><li>Weekly on-site presence</li><li>Tiered daily management and KPI ownership</li><li>Leader coaching and development</li><li>Assessment fee credited to month one</li></ul>
         <a class="eng-cta" href="#contact">Talk about fractional →</a>
+      </div>
+
+      <div class="eng eng-wide reveal">
+        <div class="eng-media"><video src="plant-floor-software.mp4" poster="plant-floor-software-poster.jpg" autoplay muted loop playsinline preload="metadata" width="1280" height="720" aria-label="North Plant Floor software showing a live 3D production line with output, OEE, first-pass yield, downtime and open actions"></video></div>
+        <div class="eng-body">
+          <span class="eng-n">04</span>
+          <h3>Software &amp; Program Development</h3>
+          <div class="eng-term">Built on your data · scoped per project</div>
+          <p>The tools that keep the system running after we leave. We build them around how your plant actually works, then train your team to own them.</p>
+          <ul><li><span><b>North Plant Floor</b>: all-in-one plant floor software for live flow and OEE, maintenance, quality and reports</span></li><li><span><b>CAPAX</b>: capital program proposals, financial cases and approvals in one place</span></li><li><span><b>Forecasting</b>: demand and capacity forecasts your planners can trust</span></li><li><span><b>Program development</b>: custom business programs, dashboards and reports built for your operation</span></li></ul>
+          <a class="eng-cta" href="#contact">See it on your data →</a>
+        </div>
       </div>
 
     </div>
