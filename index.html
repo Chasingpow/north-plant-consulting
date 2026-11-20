@@ -199,7 +199,7 @@
     border:1px solid var(--line-bright);box-shadow:0 40px 100px rgba(0,0,0,.5)}
   .gemba::after{content:"";position:absolute;inset:0;border-radius:24px;pointer-events:none;
     background:linear-gradient(180deg,transparent 55%,rgba(8,17,32,.92) 100%)}
-  .gemba img{display:block;width:100%;height:auto}
+  .gemba img,.gemba video{display:block;width:100%;height:auto}
   .gemba-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:30px 38px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
   .gemba-cap .big{font-family:var(--font-d);font-size:clamp(1.1rem,2vw,1.5rem);font-weight:700;color:#fff}
   .gemba-cap .big b{color:var(--green)}
@@ -794,7 +794,7 @@
       <p>Not stock photos — the actual tools we build with your team: hour-by-hour boards, standardized work, and a daily management cadence that escalates problems in hours, not weeks.</p>
     </div>
     <div class="gemba reveal">
-      <img src="floor-dashboard.jpg" alt="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen" width="1600" height="1067" loading="lazy">
+      <video src="floor-dashboard.mp4" poster="floor-dashboard-poster.jpg" autoplay muted loop playsinline preload="metadata" width="1178" height="786" aria-label="Plant floor team reviewing the live Plant Daily Dashboard on a wall-mounted screen, pointing at a missed hour and its reason"></video>
       <div class="gemba-cap">
         <span class="big"><b>Tier 1, 7:00 AM.</b> The numbers, live on the floor.</span>
         <span class="sub">The same dashboard the executive team sees — where the work happens.</span>
