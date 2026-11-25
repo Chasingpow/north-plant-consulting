@@ -530,6 +530,11 @@
   .eng-media video{display:block;width:100%;height:auto}
   .eng-body{display:flex;flex-direction:column}
   .eng li b{color:var(--ink);font-weight:700}
+  .dp-box{border-left:3px solid var(--amber);background:rgba(242,169,59,.12);padding:12px 14px;border-radius:0 8px 8px 0;font-size:.92rem;color:#2b3a4e;line-height:1.45;margin:0 0 20px}
+  .dp-box b{color:var(--ink)}
+  .eng-ctas{display:flex;flex-wrap:wrap;gap:10px}
+  .eng .dp-cta{background:var(--amber);border-color:var(--amber);color:#06121f}
+  .eng .dp-cta:hover{filter:brightness(1.06);background:var(--amber);color:#06121f}
   /* contact on light */
   .contact.light .contact-grid > div > p{color:var(--ink-muted)}
   .contact.light .contact-line{color:var(--ink)}
@@ -946,7 +951,7 @@
     <div class="sec-head center reveal">
       <span class="eyebrow">Engagements</span>
       <h2>Four ways to work <span class="grad">with us.</span></h2>
-      <p>Every engagement starts with a no-cost intro call. Fixed scope, fixed fee, and results you can see in your numbers.</p>
+      <p>Every engagement starts with a no-cost intro call. Clear scope, clear pricing, and results you can see in your numbers.</p>
     </div>
     <div class="eng-grid">
       <div class="eng reveal">
@@ -983,8 +988,9 @@
           <h3>Software &amp; Program Development</h3>
           <div class="eng-term">Built on your data · scoped per project</div>
           <p>The tools that keep the system running after we leave. We build them around how your plant actually works, then train your team to own them.</p>
-          <ul><li><span><b>North Plant Floor</b>: all-in-one plant floor software for live flow and OEE, maintenance, quality and reports</span></li><li><span><b>CAPAX</b>: capital program proposals, financial cases and approvals in one place</span></li><li><span><b>North Plant Crew Planner</b>: vacation planning by line, with accrual, seniority bids and approvals that won't leave a line short</span></li><li><span><b>Forecasting</b>: demand and capacity forecasts your planners can trust</span></li><li><span><b>Program development</b>: custom business programs, dashboards and reports built for your operation</span></li></ul>
-          <a class="eng-cta" href="#contact">See it on your data →</a>
+          <ul><li><span><b>North Plant Floor</b>: all-in-one plant floor software for live flow and OEE, maintenance, quality and reports</span></li><li><span><b>CAPAX</b>: capital program proposals, financial cases and approvals in one place</span></li><li><span><b>North Plant Crew Planner</b>: vacation planning by line, with accrual, seniority bids and approvals that won't leave a line short</span></li><li><span><b>RCA &amp; CAPA</b>: root cause analysis and corrective actions, assigned to owners and tracked to close, with decks for the team and management</span></li><li><span><b>Forecasting</b>: demand and capacity forecasts your planners can trust</span></li><li><span><b>Program development</b>: custom business programs, dashboards and reports built for your operation</span></li></ul>
+          <div class="dp-box"><b>Now taking design partners.</b> A few plants get early access and partner pricing in return for regular feedback.</div>
+          <div class="eng-ctas"><a class="eng-cta" href="#contact">See it on your data →</a><a class="eng-cta dp-cta" href="#contact" data-msg="We'd like to be a design partner for North Plant software. Tools we're interested in: ">Become a design partner →</a></div>
         </div>
       </div>
 
@@ -1048,6 +1054,7 @@
 </footer>
 
 <script>
+document.querySelectorAll('[data-msg]').forEach(function(a){a.addEventListener('click',function(){var m=document.getElementById('message');if(m&&!m.value.trim()){m.value=a.getAttribute('data-msg');}setTimeout(function(){if(m){m.focus({preventScroll:true});m.setSelectionRange(m.value.length,m.value.length);}},700);});});
   document.getElementById('yr').textContent = new Date().getFullYear();
   document.querySelectorAll('#navlinks a').forEach(a =>
     a.addEventListener('click', () => document.getElementById('navlinks').classList.remove('open')));
