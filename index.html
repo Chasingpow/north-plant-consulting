@@ -586,6 +586,74 @@
     .foot-nav{max-width:none}
     .eng{padding:30px 24px 26px}
   }
+  /* ===== Plant Health Check ===== */
+  .hc{background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 55%,var(--bg) 100%)}
+  .hc-shell{max-width:860px;margin:0 auto;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:38px 40px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  .hc-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .hc-count{color:#9fb0c4}.hc-area{color:var(--amber)}
+  .hc-bar{height:6px;background:rgba(255,255,255,.08);border-radius:99px;margin:14px 0 28px;overflow:hidden}
+  .hc-bar span{display:block;height:100%;width:0;background:var(--amber);border-radius:99px;transition:width .35s ease}
+  .hc-q{font-family:var(--font-h);font-weight:400;font-size:clamp(1.35rem,2.4vw,1.8rem);line-height:1.2;color:#fff;margin:0 0 24px}
+  .hc-opts{display:grid;gap:12px}
+  .hc-opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.12);color:#dbe4ef;border-radius:12px;padding:16px 18px;font:inherit;font-size:1rem;line-height:1.4;cursor:pointer;transition:border-color .15s,background .15s}
+  .hc-opt:hover,.hc-opt:focus-visible{border-color:var(--green);background:rgba(141,198,63,.07);outline:none}
+  .hc-opt.sel{border-color:var(--amber);background:rgba(242,169,59,.12);color:#fff}
+  .hc-opt i{flex:0 0 28px;height:28px;border-radius:8px;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:.85rem;background:rgba(255,255,255,.08);color:#9fb0c4}
+  .hc-opt.sel i{background:var(--amber);color:#1a1204}
+  .hc-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+  .hc-back,.hc-restart{background:none;border:none;color:#9fb0c4;font:inherit;font-weight:700;font-size:.92rem;cursor:pointer;padding:6px 0}
+  .hc-back:hover,.hc-restart:hover{color:#fff}
+  .hc-back[disabled]{visibility:hidden}
+  .hc-hint{color:#7d8ea3;font-size:.86rem}
+  .hc-score-row{display:grid;grid-template-columns:150px 1fr;gap:30px;align-items:center}
+  .hc-dial{position:relative;width:150px;height:150px}
+  .hc-dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .hc-track{fill:none;stroke:rgba(255,255,255,.09);stroke-width:10}
+  .hc-fill{fill:none;stroke:var(--amber);stroke-width:10;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1s ease}
+  .hc-dial-num{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+  .hc-dial-num b{font-family:var(--font-h);font-weight:400;font-size:2.8rem;line-height:1;color:#fff}
+  .hc-dial-num small{color:#9fb0c4;font-size:.8rem;margin-top:4px}
+  .hc-band{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a1204;background:var(--amber);border-radius:6px;padding:5px 10px;margin-bottom:12px}
+  .hc-verdict p{color:#c9d5e3;font-size:1.02rem;margin:0}
+  .hc-areas{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 28px;margin:32px 0 34px}
+  .hc-arow{display:grid;grid-template-columns:150px 1fr 34px;gap:10px;align-items:center;font-size:.86rem;color:#c9d5e3}
+  .hc-arow .t{height:8px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+  .hc-arow .t span{display:block;height:100%;border-radius:99px}
+  .hc-arow b{font-weight:700;color:#fff;text-align:right}
+  .hc-gaps-h{font-family:var(--font-h);font-weight:400;font-size:1.3rem;color:#fff;margin:0 0 16px}
+  .hc-gaps{display:grid;gap:14px}
+  .hc-gap{border-left:3px solid var(--amber);background:rgba(255,255,255,.04);border-radius:0 12px 12px 0;padding:18px 20px}
+  .hc-gap h4{margin:0 0 6px;color:#fff;font-size:1.05rem}
+  .hc-gap p{margin:0 0 8px;color:#c9d5e3;font-size:.95rem;line-height:1.5}
+  .hc-gap p b{color:#fff}
+  .hc-gap a{color:var(--green);font-weight:700;font-size:.9rem}
+  .hc-send{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px;padding-top:30px;border-top:1px solid rgba(255,255,255,.10);align-items:start}
+  .hc-send h3{font-family:var(--font-h);font-weight:400;font-size:1.3rem;color:#fff;margin:0 0 10px}
+  .hc-send p{color:#c9d5e3;font-size:.95rem;margin:0}
+  .hc-form{display:grid;gap:10px}
+  .hc-form input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:13px 14px;color:#fff;font:inherit;font-size:.97rem}
+  .hc-form input:focus{outline:none;border-color:var(--green)}
+  .hc-form input::placeholder{color:#7d8ea3}
+  .hc-form button{background:var(--green);color:#06121f;border:none;border-radius:10px;padding:14px;font:inherit;font-weight:700;font-size:1rem;cursor:pointer}
+  .hc-form button:hover{filter:brightness(1.07)}
+  .hc-form button[disabled]{opacity:.6;cursor:default}
+  .hc-form-msg{min-height:1.2em;font-size:.9rem;color:var(--amber)!important}
+  .hc-form-msg.ok{color:var(--green)!important}
+  .hc-restart{margin-top:22px}
+  .hc-form{background:none;border:none;border-radius:0;padding:0;box-shadow:none}
+  .hc-form::before,.hc-form::after{display:none!important}
+  nav a{white-space:nowrap}
+  @media (min-width:1021px) and (max-width:1240px){nav ul{gap:22px} nav a{font-size:.9rem} .nav-cta{padding:11px 18px}}
+  .hero-check{margin-top:16px;font-size:.95rem;color:#c9d5e3}
+  .hero-check a{color:var(--amber);font-weight:700}
+  .hero-check a:hover{text-decoration:underline}
+  @media (max-width:760px){
+    .hc-shell{padding:26px 20px;border-radius:16px}
+    .hc-score-row{grid-template-columns:1fr;justify-items:center;text-align:center;gap:18px}
+    .hc-areas{grid-template-columns:1fr}
+    .hc-arow{grid-template-columns:120px 1fr 30px}
+    .hc-send{grid-template-columns:1fr}
+  }
 </style>
 
 
@@ -670,6 +738,7 @@
         <li><a href="#builds">Builds</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#process">Engagements</a></li>
+        <li><a href="#health-check">Health Check</a></li>
         <li><a class="nav-cta" href="#contact">Get in Touch</a></li>
       </ul>
     </nav>
@@ -691,6 +760,7 @@
         </a>
         <a class="btn btn-ghost" href="#builds">See Our Builds</a>
       </div>
+      <p class="hero-check">Not ready to talk? <a href="#health-check">Score your plant in 3 minutes →</a></p>
       <div class="hero-built">
         <span class="hb-label">Recently built</span>
         <ul>
@@ -999,6 +1069,60 @@
 </section>
 
 
+<section class="hc" id="health-check">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Plant Health Check</span>
+      <h2>Score your plant in <span class="grad">3 minutes.</span></h2>
+      <p>Ten questions on flow, scheduling, data, daily management, maintenance, quality and people. You get a score and your three biggest gaps on the spot, with a first step for each. No email needed.</p>
+    </div>
+
+    <div class="hc-shell reveal">
+      <div class="hc-quiz" id="hcQuiz">
+        <div class="hc-top">
+          <span class="hc-count" id="hcCount">Question 1 of 10</span>
+          <span class="hc-area" id="hcArea"></span>
+        </div>
+        <div class="hc-bar"><span id="hcBar"></span></div>
+        <h3 class="hc-q" id="hcQ"></h3>
+        <div class="hc-opts" id="hcOpts" role="group" aria-labelledby="hcQ"></div>
+        <div class="hc-nav">
+          <button type="button" class="hc-back" id="hcBack">← Back</button>
+          <span class="hc-hint">Pick the answer closest to a normal week.</span>
+        </div>
+      </div>
+
+      <div class="hc-result" id="hcResult" hidden>
+        <div class="hc-score-row">
+          <div class="hc-dial" id="hcDial"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="hc-track"/><circle cx="60" cy="60" r="52" class="hc-fill" id="hcFill"/></svg><div class="hc-dial-num"><b id="hcScore">0</b><small>/ 100</small></div></div>
+          <div class="hc-verdict">
+            <span class="hc-band" id="hcBand"></span>
+            <p id="hcBandText"></p>
+          </div>
+        </div>
+        <div class="hc-areas" id="hcAreas"></div>
+        <h3 class="hc-gaps-h">Your three biggest gaps</h3>
+        <div class="hc-gaps" id="hcGaps"></div>
+
+        <div class="hc-send">
+          <div class="hc-send-copy">
+            <h3>Want a second opinion on your results?</h3>
+            <p>Send them to Keith. He'll reply within one business day with what he'd fix first at your plant. No sales sequence.</p>
+          </div>
+          <form id="hcForm" class="hc-form" novalidate>
+            <input name="name" type="text" required autocomplete="name" placeholder="Your name" aria-label="Your name">
+            <input name="email" type="email" required autocomplete="email" placeholder="you@company.com" aria-label="Email">
+            <input name="company" type="text" placeholder="Plant or company name" aria-label="Plant or company name">
+            <button type="submit">Send my results →</button>
+            <p class="hc-form-msg" id="hcMsg" role="status"></p>
+          </form>
+        </div>
+        <button type="button" class="hc-restart" id="hcRestart">Start over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="contact light" id="contact">
   <div class="container contact-grid">
     <div class="reveal">
@@ -1043,7 +1167,7 @@
   <div class="container foot-grid">
     <div class="foot-brand"><img src="logo-header.svg" alt="North Plant Consulting" class="foot-logo"><p>Plants run better when the system does.</p></div>
     <nav class="foot-nav" aria-label="Footer">
-      <a href="#services">Services</a><a href="#showcase">The System</a><a href="#builds">Builds</a><a href="#about">About</a><a href="#process">Engagements</a><a href="#contact">Contact</a>
+      <a href="#services">Services</a><a href="#showcase">The System</a><a href="#builds">Builds</a><a href="#about">About</a><a href="#process">Engagements</a><a href="#health-check">Health Check</a><a href="#contact">Contact</a>
     </nav>
     <div class="foot-right">
       <a href="mailto:keith.h@northplantconsulting.com">keith.h@northplantconsulting.com</a>
@@ -1347,6 +1471,99 @@ document.querySelectorAll('[data-msg]').forEach(function(a){a.addEventListener('
     new ResizeObserver(() => { if (cv.offsetWidth !== W || cv.offsetHeight !== H) setup(); }).observe(cv);
     requestAnimationFrame(frame);
   })();
+/* ===== Plant Health Check ===== */
+(function(){
+  var Q=[
+    {a:'Flow',q:'Do you know where your bottleneck is today?',o:['No real idea','We argue about where it is','We know, but don’t measure it','Known, and measured every day'],
+     g:{h:'Find and manage the constraint',c:'Every hour lost at the bottleneck is an hour lost for the whole plant, and extra effort anywhere else just builds WIP.',s:'Walk the floor and look for the biggest pile of WIP. The station just after it is usually your constraint. Track its output by hour for one week.',l:'#builds',lt:'See our live value stream maps →'}},
+    {a:'Scheduling',q:'How is the production schedule built and followed?',o:['Spreadsheets and daily expediting','There’s a schedule, but it changes constantly','Mostly followed, with some firefighting','Built around the constraint, released by clear rules, followed'],
+     g:{h:'Stabilize the schedule',c:'A schedule that changes all day turns supervisors into expediters and hides the real capacity of the plant.',s:'Freeze the next 48 hours of the schedule and log every change request with a reason for two weeks. The log shows you what to fix.',l:'#services',lt:'Production control and scheduling →'}},
+    {a:'Delivery',q:'What is your on-time delivery to customers?',o:['We don’t measure it','Below 80%','80% to 94%','95% or better'],
+     g:{h:'Measure and protect on-time delivery',c:'Late orders cost expediting, overtime and customers. If it isn’t measured the same way every week, it can’t improve.',s:'Agree on one definition (shipped complete on the promised date) and post the weekly number where the whole plant can see it.',l:'#services',lt:'KPI systems and accountability →'}},
+    {a:'Data',q:'How do you collect downtime and miss reasons?',o:['We don’t','On paper, rarely reviewed','In a spreadsheet, reviewed weekly','Captured at the station, reviewed daily'],
+     g:{h:'Capture losses where they happen',c:'Without reasons for downtime and misses, every improvement is a guess and the same problems repeat.',s:'Give each line a simple sheet with 6 to 8 reason codes and have operators mark every stop over 5 minutes. Pareto it on Friday.',l:'#process',lt:'North Plant Floor and data capture →'}},
+    {a:'Visibility',q:'Can a supervisor see output against plan during the shift?',o:['Only the next day or later','At the end of the shift','A few times a shift','Hour by hour, on a board at the line'],
+     g:{h:'Make the shift visible hour by hour',c:'If a shift only finds out it missed at the end, there’s no time left to recover.',s:'Put a whiteboard at one line with planned and actual output for every hour and a column for the reason when it misses. Review it at mid-shift.',l:'#showcase',lt:'See the hour-by-hour board →'}},
+    {a:'Daily management',q:'How do problems get escalated?',o:['They don’t, until a customer complains','Through ad hoc meetings','A daily meeting, but follow-up is patchy','Tiered daily meetings with owners and due dates'],
+     g:{h:'Build tiered daily management',c:'Problems that wait for a weekly meeting cost days. Escalation should take hours.',s:'Start a 15-minute stand-up at shift start: yesterday’s misses, today’s risks, and every action gets one owner and a date.',l:'#showcase',lt:'How tiered meetings work →'}},
+    {a:'Standard work',q:'Is there current standard work at each station?',o:['None','Some, but out of date','At most stations, not always followed','At every station, used for training and audited'],
+     g:{h:'Write down the best way, then train to it',c:'Without standard work, output and quality depend on who’s on shift, and new hires take far longer to get up to speed.',s:'Pick the station with the most variation, film your best operator, and turn it into a one-page standard with key points and reasons.',l:'#services',lt:'Training, SOPs and standard work →'}},
+    {a:'Maintenance',q:'How is your equipment maintained?',o:['We fix it when it breaks','Some PMs, often skipped','A PM schedule that’s mostly done','PM compliance tracked and breakdowns analyzed'],
+     g:{h:'Move from breakdowns to prevention',c:'Unplanned breakdowns cost far more than planned maintenance: lost output, rush parts and overtime.',s:'List your 5 most critical machines, give each a short weekly PM checklist, and track whether it gets done.',l:'#process',lt:'Maintenance tracking in North Plant Floor →'}},
+    {a:'Quality',q:'When a defect reaches a customer, what happens?',o:['Fix the part and move on','Someone looks into it if there’s time','A formal root cause on the big ones','Root cause and corrective actions with owners, verified closed'],
+     g:{h:'Close the loop on root cause',c:'Fixing the part without fixing the cause guarantees the defect comes back.',s:'For the next escape, run a 5 Whys with the people who do the work, assign each action an owner and date, and check 30 days later that it stuck.',l:'#process',lt:'RCA and CAPA software →'}},
+    {a:'Leadership',q:'How are front-line leaders developed?',o:['Promoted and left to figure it out','Occasional training','A defined role with some coaching','A clear role, a skills matrix and regular coaching'],
+     g:{h:'Develop your front-line leaders',c:'Supervisors run the system every shift. Without a defined role and coaching, they default to firefighting.',s:'Write down what a supervisor should do in the first and last 30 minutes of a shift, then spend one shift a week coaching against it.',l:'#services',lt:'Org design and leader development →'}}
+  ];
+  var BANDS=[[85,'System-driven','Your plant runs on a system. The gains now come from tightening the few areas below and sustaining what works.'],
+             [65,'Stable','The basics are in place, but a few weak links still cost you output and on-time delivery every week.'],
+             [40,'Reactive','The plant gets product out, but mostly through effort and firefighting. The gaps below are where hours and dollars leak out.'],
+             [0,'Firefighting','Most days are spent reacting. That’s common, and fixable: start with the three gaps below, in order.']];
+  var ans=new Array(Q.length).fill(null), i=0, last=null;
+  var $=function(id){return document.getElementById(id)};
+  if(!$('hcQuiz'))return;
+  function render(){
+    var q=Q[i];
+    $('hcCount').textContent='Question '+(i+1)+' of '+Q.length;
+    $('hcArea').textContent=q.a;
+    $('hcBar').style.width=(i/Q.length*100)+'%';
+    $('hcQ').textContent=q.q;
+    var box=$('hcOpts'); box.innerHTML='';
+    q.o.forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='hc-opt'+(ans[i]===k?' sel':'');
+      b.innerHTML='<i>'+'ABCD'[k]+'</i><span></span>'; b.querySelector('span').textContent=t;
+      b.setAttribute('aria-pressed',ans[i]===k?'true':'false');
+      b.addEventListener('click',function(){ans[i]=k; b.classList.add('sel'); setTimeout(next,220);});
+      box.appendChild(b);
+    });
+    $('hcBack').disabled=i===0;
+  }
+  function next(){ if(i<Q.length-1){i++;render();} else result(); }
+  function result(){
+    var total=ans.reduce(function(s,v){return s+v},0), score=Math.round(total/(Q.length*3)*100);
+    var band=BANDS.filter(function(b){return score>=b[0]})[0];
+    $('hcQuiz').hidden=true; $('hcResult').hidden=false;
+    $('hcBand').textContent=band[1]; $('hcBandText').textContent=band[2];
+    var n=0, el=$('hcScore'), t=setInterval(function(){n=Math.min(score,n+2); el.textContent=n; if(n>=score)clearInterval(t);},18);
+    requestAnimationFrame(function(){$('hcFill').style.strokeDashoffset=326.7*(1-score/100);});
+    var areas=$('hcAreas'); areas.innerHTML='';
+    Q.forEach(function(q,k){
+      var p=Math.round(ans[k]/3*100), col=p>=67?'var(--green)':p>=34?'var(--amber)':'#E5484D';
+      var r=document.createElement('div'); r.className='hc-arow';
+      r.innerHTML='<span></span><div class="t"><span style="width:'+Math.max(p,4)+'%;background:'+col+'"></span></div><b>'+p+'</b>';
+      r.firstChild.textContent=q.a; areas.appendChild(r);
+    });
+    var order=Q.map(function(q,k){return k}).sort(function(a,b){return ans[a]-ans[b]||a-b}).slice(0,3);
+    var gaps=$('hcGaps'); gaps.innerHTML='';
+    order.forEach(function(k,j){
+      var g=Q[k].g, d=document.createElement('div'); d.className='hc-gap';
+      d.innerHTML='<h4></h4><p class="c"></p><p class="s"><b>First step this week:</b> <span></span></p><a></a>';
+      d.querySelector('h4').textContent=(j+1)+'. '+g.h+' ('+Q[k].a+')';
+      d.querySelector('.c').textContent=g.c; d.querySelector('.s span').textContent=g.s;
+      var a=d.querySelector('a'); a.href=g.l; a.textContent=g.lt; gaps.appendChild(d);
+    });
+    last={score:score,band:band[1],gaps:order.map(function(k){return Q[k].a+': '+Q[k].g.h}),
+          answers:Q.map(function(q,k){return q.a+': '+q.o[ans[k]]+' ('+ans[k]+'/3)'})};
+    $('hcResult').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('hcBack').addEventListener('click',function(){ if(i>0){i--;render();} });
+  $('hcRestart').addEventListener('click',function(){ ans.fill(null); i=0; $('hcResult').hidden=true; $('hcQuiz').hidden=false; $('hcMsg').textContent=''; $('hcMsg').className='hc-form-msg'; render(); $('health-check').scrollIntoView({behavior:'smooth'}); });
+  $('hcForm').addEventListener('submit',function(e){
+    e.preventDefault(); var f=e.target, msg=$('hcMsg');
+    if(!f.name.value.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())){msg.className='hc-form-msg';msg.textContent='Please add your name and a valid email.';return;}
+    var fd=new FormData();
+    fd.append('_subject','Plant health check: '+last.score+'/100 ('+last.band+')'+(f.company.value.trim()?' - '+f.company.value.trim():''));
+    fd.append('name',f.name.value.trim()); fd.append('email',f.email.value.trim()); fd.append('company',f.company.value.trim());
+    fd.append('source','Plant Health Check'); fd.append('score',last.score+'/100'); fd.append('band',last.band);
+    fd.append('top_gaps',last.gaps.join(' | ')); fd.append('answers',last.answers.join('\n'));
+    fd.append('message','Plant health check results: '+last.score+'/100 ('+last.band+').\nTop gaps: '+last.gaps.join('; ')+'\n\n'+last.answers.join('\n'));
+    var btn=f.querySelector('button'); btn.disabled=true; msg.className='hc-form-msg'; msg.textContent='Sending…';
+    fetch('https://formspree.io/f/maeyeqno',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+      .then(function(r){ if(!r.ok) throw 0; msg.className='hc-form-msg ok'; msg.textContent='Sent. Keith will reply within one business day.'; f.reset(); })
+      .catch(function(){ msg.className='hc-form-msg'; msg.textContent='That didn’t send. Please email keith.h@northplantconsulting.com instead.'; btn.disabled=false; });
+  });
+  render();
+})();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "388180ffcf764093bd98b48d20613182"}'></script><!-- End Cloudflare Web Analytics -->
 <script>
